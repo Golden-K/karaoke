@@ -2,6 +2,7 @@
   "name": "web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -20,11 +21,14 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-youtube": "^10.1.0",
-    "typescript": "^4.4.2",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
+    "typescript": "^5.3.3",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "node --loader ts-node/esm api/server.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -46,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/socket.io-client": "^3.0.0",
+    "ts-node": "^10.9.2"
   }
 }

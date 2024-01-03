@@ -35,3 +35,9 @@ export type Alert = {
   message: string;
   severity: "error" | "info" | "success" | "warning";
 };
+
+export type QueueItem = {
+  karaokeName: string;
+  title: string;
+  videoId: string;
+};

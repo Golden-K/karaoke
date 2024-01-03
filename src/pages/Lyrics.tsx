@@ -1,4 +1,5 @@
 import YouTube from "react-youtube";
+import { QueueList } from "../components/QueueList";
 import { useLyricsLoader } from "./useLyricsLoader";
 
 export const Lyrics = () => {
@@ -6,7 +7,9 @@ export const Lyrics = () => {
   const { handleNextSong } = actions;
   const { playerOptions } = data;
   const { playerRef } = refs;
-  const { currentSong } = state;
+  const { queue } = state;
+
+  const currentSong = queue[0];
 
   return (
     <div style={styles.container}>
@@ -17,6 +20,7 @@ export const Lyrics = () => {
         onEnd={handleNextSong}
         onReady={(e) => (playerRef.current = e)}
       />
+      <QueueList queue={queue} />
     </div>
   );
 };

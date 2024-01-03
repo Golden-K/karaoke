@@ -1,15 +1,52 @@
-import { useState } from "react";
-import { Alert, Item, SongItem } from "../types";
+import { useEffect, useState } from "react";
+import { Alert, Item, SongItem } from "../../types";
+import { socket } from "../socket";
 
 const { REACT_APP_GOOGLE_API_KEY } = process.env;
 
 export const useAddSongLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [karaokeName, setKaraokeName] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
 
+  useEffect(() => {
+    socket.on("add_song_ack", (data) => {
+      setIsLoading(false);
+      if (data.status === "error") {
+        return setAlert({
+          message: "Error adding song to queue",
+          severity: "error",
+        });
+      }
+      setSearchTerm("");
+      setSearchRestults([]);
+      setAlert({ message: "Song added to queue", severity: "success" });
+    });
+
+    const localKaraokeName = localStorage.getItem("karaokeName");
+    if (localKaraokeName) setKaraokeName(localKaraokeName);
+
+    return () => {
+      socket.off("add_song_ack");
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!karaokeName) return;
+    localStorage.setItem("karaokeName", karaokeName);
+  }, [karaokeName]);
+
   const handleSearch = async () => {
+    if (!karaokeName || !searchTerm) {
+      return setAlert({
+        message: "Please enter a karaoke name and search term",
+        severity: "error",
+      });
+    }
     try {
+      setIsLoading(true);
       const params = {
         key: REACT_APP_GOOGLE_API_KEY,
         maxResults: 3,
@@ -28,19 +65,33 @@ export const useAddSongLoader = () => {
       const data = await response.json();
       const { items } = data;
       setSearchRestults(
-        items.map((item: Item) => ({ ...item.snippet, id: item.id.videoId }))
+        items.map((item: Item) => ({
+          ...item.snippet,
+          videoId: item.id.videoId,
+        }))
       );
+      setIsLoading(false);
     } catch (error: any) {
+      setIsLoading(false);
       console.error(error);
       setAlert({ message: error.message, severity: "error" });
     }
   };
 
   const handleSelectSong = (song: SongItem) => {
-    // TODO: Add song to queue
-    setSearchTerm("");
-    setSearchRestults([]);
-    setAlert({ message: "Song added to queue", severity: "success" });
+    if (!karaokeName) {
+      return setAlert({
+        message: "Please enter a karaoke name",
+        severity: "error",
+      });
+    }
+    setIsLoading(true);
+    const dataForQueue = {
+      karaokeName,
+      videoId: song.videoId,
+      title: song.title,
+    };
+    socket.emit("add_song", dataForQueue, console.error);
   };
 
   const handleCloseSnackbar = () => {
@@ -51,8 +102,9 @@ export const useAddSongLoader = () => {
     handleCloseSnackbar,
     handleSearch,
     handleSelectSong,
+    setKaraokeName,
     setSearchTerm,
   };
-  const state = { alert, searchResults, searchTerm };
+  const state = { alert, isLoading, karaokeName, searchResults, searchTerm };
   return { actions, state };
 };
