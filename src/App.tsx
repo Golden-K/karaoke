@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "react-error-boundary";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { AddSong } from "./pages/AddSong";
@@ -15,9 +16,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
+    <ErrorBoundary fallback={<h1>Err0r!</h1>}>
+      <div className="App">
+        <RouterProvider router={router} />
+      </div>
+    </ErrorBoundary>
   );
 }
 

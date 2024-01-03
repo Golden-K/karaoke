@@ -5,7 +5,7 @@ export const Lyrics = () => {
   const { actions, data, refs, state } = useLyricsLoader();
   const { handleNextSong } = actions;
   const { playerOptions } = data;
-  const { videoRef } = refs;
+  const { playerRef } = refs;
   const { currentSong } = state;
 
   return (
@@ -15,6 +15,7 @@ export const Lyrics = () => {
         videoId={currentSong?.videoId ?? "dQw4w9WgXcQ"}
         opts={playerOptions}
         onEnd={handleNextSong}
+        onReady={(e) => (playerRef.current = e)}
       />
     </div>
   );
