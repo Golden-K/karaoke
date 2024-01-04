@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Item, SongItem } from "../../types";
+import { Alert, Item, QueueItem, SongItem } from "../../types";
 import { socket } from "../socket";
 
 const { REACT_APP_GOOGLE_API_KEY } = process.env;
@@ -8,6 +8,7 @@ export const useAddSongLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [karaokeName, setKaraokeName] = useState("");
+  const [queue, setQueue] = useState<QueueItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
 
@@ -20,6 +21,8 @@ export const useAddSongLoader = () => {
           severity: "error",
         });
       }
+      socket.on("update_queue", setQueue);
+
       setSearchTerm("");
       setSearchRestults([]);
       setAlert({ message: "Song added to queue", severity: "success" });
@@ -30,6 +33,7 @@ export const useAddSongLoader = () => {
 
     return () => {
       socket.off("add_song_ack");
+      socket.off("update_queue");
     };
   }, []);
 
@@ -105,6 +109,13 @@ export const useAddSongLoader = () => {
     setKaraokeName,
     setSearchTerm,
   };
-  const state = { alert, isLoading, karaokeName, searchResults, searchTerm };
+  const state = {
+    alert,
+    isLoading,
+    karaokeName,
+    queue,
+    searchResults,
+    searchTerm,
+  };
   return { actions, state };
 };

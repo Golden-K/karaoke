@@ -1,38 +1,45 @@
+import { Delete } from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import { QueueItem } from "../../types";
+import { QueueRow } from "./QueueRow";
 
 type QueueListProps = {
   queue: QueueItem[];
+  handleDelete?: (id: string) => void;
 };
 
-export const QueueList = ({ queue }: QueueListProps) => {
-  console.log("IN THE QUEUE LIST", queue);
-  return queue.length ? (
-    <div style={styles.container}>
-      {queue.map((item) => (
-        <div style={styles.itemContainer}>
-          <div style={{ flex: 1 }}>{item.karaokeName}</div>
-          <div style={{ flex: 1 }}>{item.title}</div>
-        </div>
+export const QueueList = ({ queue, handleDelete }: QueueListProps) => {
+  return (
+    <List>
+      {queue.map((item: QueueItem, index: number) => (
+        <ListItem
+          key={`${item.videoId}-${index}`}
+          style={styles.queueItemContainer}
+        >
+          {handleDelete ? (
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleDelete(item.id)}
+            >
+              <Delete color="error" />
+            </IconButton>
+          ) : null}
+          <QueueRow item={item} />
+        </ListItem>
       ))}
-    </div>
-  ) : null;
+    </List>
+  );
 };
 
 const styles = {
-  container: {
-    position: "fixed",
-    top: 0,
-    right: 0,
-    height: "20%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    color: "white",
-    zIndex: 9999,
-    overflow: "hidden",
-  },
-  itemContainer: {
-    marginTop: 10,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  queueItemContainer: {
+    alignContent: "center",
+    borderBottom: "3px groove orange",
+    cursor: "grab",
+    WebkitUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
   },
 } as const;
