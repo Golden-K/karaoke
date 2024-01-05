@@ -44,7 +44,7 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-  io.emit("update_queue", queue);
+  socket.emit("update_queue", queue);
   socket.on("add_song", (queueItem) => {
     if (queue.length > 100) {
       return socket.emit("add_song_ack", { status: "error" });
@@ -61,21 +61,21 @@ io.on("connection", (socket) => {
   });
 
   socket.on("get_queue", () => {
-    socket.emit("update_queue", queue);
+    io.emit("update_queue", queue);
   });
 
   socket.on("next_song", () => {
     if (queue.length === 0) return;
     queue.shift();
-    socket.emit("next_song_ack", { status: "success" });
+    io.emit("next_song_ack", { status: "success" });
   });
 
   socket.on("pause_song", () => {
-    socket.broadcast.emit("pause_song");
+    io.emit("pause_song");
   });
 
   socket.on("resume_song", () => {
-    socket.broadcast.emit("resume_song");
+    io.emit("resume_song");
   });
 
   socket.on("reorder_queue", (newQueue) => {

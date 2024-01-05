@@ -4,7 +4,7 @@ type QueueItemProps = {
   item: QueueItem;
 };
 
-export const QueueRow = ({ item }: QueueItemProps) => {
+export const QueueListItem = ({ item }: QueueItemProps) => {
   return (
     <span style={styles.itemContainer}>
       <div style={{ flex: 1 }}>{item.karaokeName}</div>

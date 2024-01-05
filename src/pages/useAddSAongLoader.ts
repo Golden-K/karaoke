@@ -13,6 +13,9 @@ export const useAddSongLoader = () => {
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
 
   useEffect(() => {
+    socket.emit("get_queue", console.error);
+
+    socket.on("update_queue", setQueue);
     socket.on("add_song_ack", (data) => {
       setIsLoading(false);
       if (data.status === "error") {
@@ -21,7 +24,6 @@ export const useAddSongLoader = () => {
           severity: "error",
         });
       }
-      socket.on("update_queue", setQueue);
 
       setSearchTerm("");
       setSearchRestults([]);

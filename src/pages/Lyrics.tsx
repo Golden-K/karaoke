@@ -4,7 +4,7 @@ import { useLyricsLoader } from "./useLyricsLoader";
 
 export const Lyrics = () => {
   const { actions, data, refs, state } = useLyricsLoader();
-  const { handleNextSong } = actions;
+  const { handleVideoStateChange } = actions;
   const { playerOptions } = data;
   const { playerRef } = refs;
   const { queue } = state;
@@ -15,8 +15,8 @@ export const Lyrics = () => {
         style={styles.player}
         videoId={queue[0]?.videoId ?? "dQw4w9WgXcQ"}
         opts={playerOptions}
-        onEnd={handleNextSong}
         onReady={(e) => (playerRef.current = e)}
+        onStateChange={handleVideoStateChange}
       />
       <QueueWidget queue={queue} />
     </div>

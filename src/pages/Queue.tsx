@@ -1,17 +1,19 @@
 import Pause from "@mui/icons-material/Pause";
 import Play from "@mui/icons-material/PlayArrow";
+import Skip from "@mui/icons-material/SkipNext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ReactDragListView from "react-drag-listview";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { QueueList } from "../components/QueueList";
 import { useQueueLoader } from "./useQueueLoader";
 
 export const Queue = () => {
   const { actions, state } = useQueueLoader();
-  const { handleDelete, handleDragEnd, handlePause, handleResume } = actions;
+  const { handleDelete, handleDragEnd, handlePause, handleResume, handleSkip } =
+    actions;
   const { queue } = state;
 
   return (
@@ -38,17 +40,22 @@ export const Queue = () => {
           <QueueList queue={queue.slice(1)} handleDelete={handleDelete} />
         </ReactDragListView>
       </Box>
-      {/* <Box style={styles.spacer} /> */}
+
+      <Box style={styles.spacer} />
 
       <Box style={styles.controlsContainer}>
-        <Link to="/">
+        <NavLink to="/">
           <Button>Add Song</Button>
-        </Link>
-        <IconButton>
-          <Pause onClick={handlePause} fontSize="large" />
+        </NavLink>
+        <Box style={styles.spacer} />
+        <IconButton onClick={handleSkip}>
+          <Skip color="primary" fontSize="large" />
         </IconButton>
-        <IconButton>
-          <Play color="success" onClick={handleResume} fontSize="large" />
+        <IconButton onClick={handlePause}>
+          <Pause fontSize="large" />
+        </IconButton>
+        <IconButton onClick={handleResume}>
+          <Play color="success" fontSize="large" />
         </IconButton>
       </Box>
     </Box>
@@ -68,6 +75,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    width: "100%",
   },
   currentlyContainer: {
     width: "100%",
@@ -76,11 +84,13 @@ const styles = {
     whiteSpace: "nowrap",
     display: "block",
     animation: "marquee 20s linear infinite 5s",
+    color: "lawngreen",
   },
   currentSinging: {
     textOverflow: "ellipsis",
     overflow: "hidden",
     whiteSpace: "nowrap",
+    color: "lawngreen",
   },
   currentContainer: {
     display: "flex",
@@ -90,10 +100,10 @@ const styles = {
     width: "100%",
   },
   listContainer: {
+    padding: 0,
     marginTop: 32,
-    borderTop: "3px groove orange",
-    flex: 1,
     width: "100%",
+    borderBottom: "3px groove orange",
   },
 
   spacer: { flex: 1 },

@@ -1,4 +1,5 @@
 import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import Link from "@mui/material/Link";
@@ -21,11 +22,14 @@ export const AddSong = () => {
   } = actions;
   const { alert, isLoading, karaokeName, queue, searchTerm, searchResults } =
     state;
-  return (
-    <div style={styles.container}>
-      <QueueList queue={queue} />
 
-      <div style={styles.spacer} />
+  return (
+    <Box style={styles.container}>
+      <Box style={styles.fullWidth}>
+        <QueueList queue={queue} />
+      </Box>
+
+      <Box style={styles.spacer} />
 
       <List style={styles.listContainer}>
         {searchResults.map((result, index) => (
@@ -38,11 +42,14 @@ export const AddSong = () => {
         ))}
       </List>
 
-      <div style={styles.optionsContainer}>
+      <Box style={styles.optionsContainer}>
         <NavLink to="/queue">
-          <Button>Go to Queue</Button>
+          <Button>Queue</Button>
         </NavLink>
-        <div style={styles.inputContainer}>
+
+        <Box style={styles.spacer} />
+
+        <Box style={styles.inputContainer}>
           <Input
             type="text"
             placeholder="Karaoke Name"
@@ -60,9 +67,12 @@ export const AddSong = () => {
               }
             }}
           />
-        </div>
+        </Box>
+
+        <Box style={styles.spacer} />
+
         <Button onClick={handleSearch}>Search</Button>
-      </div>
+      </Box>
 
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -76,7 +86,7 @@ export const AddSong = () => {
       </Snackbar>
 
       <LoadingSpinner isLoading={isLoading} />
-    </div>
+    </Box>
   );
 };
 
@@ -86,7 +96,9 @@ const styles = {
     display: "flex",
     height: "100vh",
     alignItems: "center",
+    width: "100%",
   },
+  fullWidth: { width: "100%" },
   inputContainer: {
     display: "flex",
     flexDirection: "column",
@@ -99,6 +111,7 @@ const styles = {
     display: "flex",
     flexDiection: "row",
     marginTop: 32,
+    width: "100%",
   },
   spacer: { flex: 1 },
 } as const;

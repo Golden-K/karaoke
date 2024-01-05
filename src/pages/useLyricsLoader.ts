@@ -17,6 +17,7 @@ const playerOptions = {
 export const useLyricsLoader = () => {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const playerRef = useRef<YouTubeEvent | null>(null);
+  const [isWaitingForQueueUpdate, setIsWaitingForQueueUpdate] = useState(false);
 
   useEffect(() => {
     socket.timeout(5000).emit("get_queue", console.error);
@@ -27,12 +28,19 @@ export const useLyricsLoader = () => {
     socket.on("resume_song", () => {
       resumeSong();
     });
-    socket.on("update_queue", setQueue);
+    socket.on("update_queue", (newQueue) => {
+      setQueue(newQueue);
+      if (isWaitingForQueueUpdate) {
+        if (playerRef.current) {
+          playerRef.current.target.seekTo(0);
+          playerRef.current.target.playVideo();
+          setIsWaitingForQueueUpdate(false);
+        }
+      }
+    });
     socket.on("next_song_ack", () => {
       socket.emit("get_queue", console.error);
-      if (playerRef.current) {
-        playerRef.current.target.currentTime = 0;
-      }
+      setIsWaitingForQueueUpdate(true);
     });
     return () => {
       socket.off("pause_song");
@@ -41,8 +49,12 @@ export const useLyricsLoader = () => {
     };
   }, []);
 
-  const handleNextSong = () => {
-    socket.emit("next_song", console.error);
+  const handleVideoStateChange = (event: YouTubeEvent) => {
+    switch (event.data) {
+      case 0:
+        socket.emit("next_song", console.error);
+        break;
+    }
   };
 
   const pauseSong = () =>
@@ -54,7 +66,7 @@ export const useLyricsLoader = () => {
       ? playerRef.current.target.playVideo()
       : null;
 
-  const actions = { handleNextSong };
+  const actions = { handleVideoStateChange };
   const data = { playerOptions };
   const refs = { playerRef };
   const state = { queue };

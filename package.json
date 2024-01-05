@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "node --loader ts-node/esm api/server.ts",
+    "server": "node --loader ts-node/esm api/server.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

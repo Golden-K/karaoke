@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import { QueueItem } from "../../types";
-import { QueueRow } from "./QueueRow";
+import { QueueListItem } from "./QueueListItem";
 
 type QueueListProps = {
   queue: QueueItem[];
@@ -12,7 +12,7 @@ type QueueListProps = {
 
 export const QueueList = ({ queue, handleDelete }: QueueListProps) => {
   return (
-    <List>
+    <List style={styles.listContainer}>
       {queue.map((item: QueueItem, index: number) => (
         <ListItem
           key={`${item.videoId}-${index}`}
@@ -26,7 +26,7 @@ export const QueueList = ({ queue, handleDelete }: QueueListProps) => {
               <Delete color="error" />
             </IconButton>
           ) : null}
-          <QueueRow item={item} />
+          <QueueListItem item={item} />
         </ListItem>
       ))}
     </List>
@@ -34,9 +34,12 @@ export const QueueList = ({ queue, handleDelete }: QueueListProps) => {
 };
 
 const styles = {
+  listContainer: { padding: 0 },
   queueItemContainer: {
     alignContent: "center",
-    borderBottom: "3px groove orange",
+    backgroundColor: "white",
+    borderTop: "3px groove orange",
+    color: "black",
     cursor: "grab",
     WebkitUserSelect: "none",
     msUserSelect: "none",

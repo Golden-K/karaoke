@@ -6,7 +6,7 @@ export const useQueueLoader = () => {
   const [queue, setQueue] = useState<QueueItem[]>([]);
 
   useEffect(() => {
-    socket.timeout(5000).emit("get_queue", console.error);
+    socket.emit("get_queue", console.error);
 
     socket.on("update_queue", setQueue);
     return () => {
@@ -32,7 +32,17 @@ export const useQueueLoader = () => {
     socket.emit("resume_song", console.error);
   };
 
-  const actions = { handleDelete, handleDragEnd, handlePause, handleResume };
+  const handleSkip = () => {
+    socket.emit("next_song", console.error);
+  };
+
+  const actions = {
+    handleDelete,
+    handleDragEnd,
+    handlePause,
+    handleResume,
+    handleSkip,
+  };
   const state = { queue };
   return { actions, state };
 };
