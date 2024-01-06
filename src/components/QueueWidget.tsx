@@ -20,7 +20,7 @@ const styles = {
     position: "fixed",
     top: 0,
     right: 0,
-    height: "20%",
+    maxHeight: "20%",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     color: "black",
     width: "100%",

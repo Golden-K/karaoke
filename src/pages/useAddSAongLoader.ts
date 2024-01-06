@@ -84,6 +84,10 @@ export const useAddSongLoader = () => {
     }
   };
 
+  const clearSearchResults = () => {
+    setSearchRestults([]);
+  };
+
   const handleSelectSong = (song: SongItem) => {
     if (!karaokeName) {
       return setAlert({
@@ -105,6 +109,7 @@ export const useAddSongLoader = () => {
   };
 
   const actions = {
+    clearSearchResults,
     handleCloseSnackbar,
     handleSearch,
     handleSelectSong,

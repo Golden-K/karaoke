@@ -2,18 +2,17 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
-import Link from "@mui/material/Link";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import Snackbar from "@mui/material/Snackbar";
 import { NavLink } from "react-router-dom";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
+import { SearchResultsModal } from "../components/SearchResultsModal";
 import { useAddSongLoader } from "./useAddSAongLoader";
 
 export const AddSong = () => {
   const { actions, state } = useAddSongLoader();
   const {
+    clearSearchResults,
     handleSearch,
     handleSelectSong,
     handleCloseSnackbar,
@@ -31,16 +30,11 @@ export const AddSong = () => {
 
       <Box style={styles.spacer} />
 
-      <List style={styles.listContainer}>
-        {searchResults.map((result, index) => (
-          <ListItem
-            key={`${result.title}-${index}`}
-            onClick={() => handleSelectSong(result)}
-          >
-            <Link href="#">{result.title}</Link>
-          </ListItem>
-        ))}
-      </List>
+      <SearchResultsModal
+        searchResults={searchResults}
+        handleSelectSong={handleSelectSong}
+        clearSearchResults={clearSearchResults}
+      />
 
       <Box style={styles.optionsContainer}>
         <NavLink to="/queue">
@@ -104,7 +98,6 @@ const styles = {
     flexDirection: "column",
     padding: "0 18px",
   },
-  listContainer: { backgroundColor: "white", width: "100%" },
   optionsContainer: {
     alignItems: "flex-end",
     backgroundColor: "white",
