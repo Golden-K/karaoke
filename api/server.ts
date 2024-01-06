@@ -2,38 +2,21 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { QueueItem } from "../types";
 
-let queue: QueueItem[] = [
-  {
-    id: crypto.randomUUID(),
-    title: "testing skjfklds;jfajdss;f",
-    karaokeName: "anojlkfjdsf",
-    videoId: "_fhDVVfELsM",
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "testing skjfklds;jfajdss;f",
-    karaokeName: "anojlkfjdsf",
-    videoId: "_fhDVVfELsM",
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "testing skjfklds;jfajdss;f",
-    karaokeName: "anojlkfjdsf",
-    videoId: "_fhDVVfELsM",
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "testing skjfklds;jfajdss;f",
-    karaokeName: "anojlkfjdsf",
-    videoId: "_fhDVVfELsM",
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "testing skjfklds;jfajdss;f",
-    karaokeName: "anojlkfjdsf",
-    videoId: "_fhDVVfELsM",
-  },
-];
+const VIDEO_STATUS = {
+  PAUSED: "PAUSED",
+  PLAYING: "PLAYING",
+} as const;
+let status: keyof typeof VIDEO_STATUS = VIDEO_STATUS.PAUSED;
+let queue: QueueItem[] = [];
+
+// for (let i = 0; i < 50; i++) {
+//   queue.push({
+//     karaokeName: "TEST USER",
+//     videoId: "dQw4w9WgXcQ",
+//     title: crypto.randomUUID(),
+//     id: crypto.randomUUID(),
+//   });
+// }
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
@@ -45,6 +28,7 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   socket.emit("update_queue", queue);
+
   socket.on("add_song", (queueItem) => {
     if (queue.length > 100) {
       return socket.emit("add_song_ack", { status: "error" });
@@ -64,23 +48,24 @@ io.on("connection", (socket) => {
     io.emit("update_queue", queue);
   });
 
+  socket.on("get_video_status", () => {
+    io.emit("update_status", status);
+  });
+
   socket.on("next_song", () => {
     if (queue.length === 0) return;
     queue.shift();
     io.emit("next_song_ack", { status: "success" });
   });
 
-  socket.on("pause_song", () => {
-    io.emit("pause_song");
-  });
-
-  socket.on("resume_song", () => {
-    io.emit("resume_song");
-  });
-
   socket.on("reorder_queue", (newQueue) => {
     queue = newQueue;
     io.emit("update_queue", queue);
+  });
+
+  socket.on("set_status", (newStatus) => {
+    status = newStatus;
+    io.emit("update_status", status);
   });
 });
 

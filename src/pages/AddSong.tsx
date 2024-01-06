@@ -104,14 +104,15 @@ const styles = {
     flexDirection: "column",
     padding: "0 18px",
   },
-  listContainer: { backgroundColor: "white" },
+  listContainer: { backgroundColor: "white", width: "100%" },
   optionsContainer: {
     alignItems: "flex-end",
     backgroundColor: "white",
     display: "flex",
     flexDiection: "row",
-    marginTop: 32,
     width: "100%",
+    position: "sticky",
+    bottom: 0,
   },
   spacer: { flex: 1 },
 } as const;
