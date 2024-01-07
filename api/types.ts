@@ -3,4 +3,5 @@ export type QueueItem = {
   title: string;
   videoId: string;
   id: string;
+  channelTitle: string;
 };

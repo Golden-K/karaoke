@@ -96,7 +96,6 @@ export const useAddSongLoader = () => {
         items.map((item: Item) => ({
           ...item.snippet,
           videoId: item.id.videoId,
-          channelTitle: item.channelTitle,
         }))
       );
       setIsLoading(false);
@@ -123,6 +122,7 @@ export const useAddSongLoader = () => {
       karaokeName,
       videoId: song.videoId,
       title: song.title,
+      channelTitle: song.channelTitle,
     };
     socket.emit("add_song", dataForQueue, console.error);
   };
