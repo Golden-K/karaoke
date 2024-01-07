@@ -1,0 +1,53 @@
+name: "Deploy Web"
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["web/**"]
+
+env:
+  TARGET_WEB_DIR: { { secrets.TARGET_WEB_DIR } }
+  REMOTE_USER: { { secrets.REMOTE_USER } }
+
+jobs:
+  build:
+    name: 🐳 Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Build .env
+        run: |
+          cd web
+          echo "REACT_APP_GOOGLE_API_KEY_1=${{ secrets.REACT_APP_GOOGLE_API_KEY_1 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_2=${{ secrets.REACT_APP_GOOGLE_API_KEY_2 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_3=${{ secrets.REACT_APP_GOOGLE_API_KEY_3 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_4=${{ secrets.REACT_APP_GOOGLE_API_KEY_4 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_5=${{ secrets.REACT_APP_GOOGLE_API_KEY_5 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_6=${{ secrets.REACT_APP_GOOGLE_API_KEY_6 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_7=${{ secrets.REACT_APP_GOOGLE_API_KEY_7 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_8=${{ secrets.REACT_APP_GOOGLE_API_KEY_8 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_9=${{ secrets.REACT_APP_GOOGLE_API_KEY_9 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_10=${{ secrets.REACT_APP_GOOGLE_API_KEY_10 }}" >>.env
+
+      - name: 🐳 Build
+        run: cd web && yarn && yarn build
+
+      - name: Deploy to Linode
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SOURCE: "./web/build/"
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ env.REMOTE_USER }}
+          TARGET: ${{ env.TARGET_WEB_DIR }}

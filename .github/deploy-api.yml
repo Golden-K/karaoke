@@ -1,0 +1,45 @@
+name: "Deploy API"
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["api/**"]
+
+env:
+  TARGET_API_DIR: ${{ secrets.TARGET_API_DIR }}
+  REMOTE_USER: ${{ secrets.REMOTE_USER }}}}
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Deploy to Linode
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SOURCE: "./api"
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ env.REMOTE_USER }}
+          TARGET: ${{ env.TARGET_API_DIR }}
+          SCRIPT_AFTER: |
+            set -euxo pipefail
+            cd ${{ env.TARGET_API_DIR }}
+
+            # Restart the API
+            docker compose -f docker-compose.yml down -v
+            docker compose -f docker-compose.yml up --build --force-recreate --remove-orphans -d
+
+            echo $RSYNC_STDOUT

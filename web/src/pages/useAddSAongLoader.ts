@@ -5,14 +5,12 @@ import { socket } from "../socket";
 const MAX_API_KEYS = 10;
 const apiKeys: Array<string | undefined> = [];
 
-// YouTube's API key is rate limited to 10,000 "units" per day, and searches cost 100 "units"
+// YouTube's API key is rate limited to 10,000 "units" per day, and searches cost 100 "units", which equates to 100 searches...
 // This is a hack to get around that limit by using 10 API keys, they even recommend it themselves
 for (let i = 1; i <= MAX_API_KEYS; i++) {
   const keyName = `REACT_APP_GOOGLE_API_KEY_${i}`;
   apiKeys.push(process.env[keyName]);
 }
-
-console.log(apiKeys);
 
 export const useAddSongLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);

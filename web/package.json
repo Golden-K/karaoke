@@ -9,13 +9,6 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.15.3",
     "@mui/material": "^5.15.2",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-drag-listview": "^2.0.0",
@@ -23,15 +16,11 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-youtube": "^10.1.0",
-    "socket.io": "^4.7.2",
     "socket.io-client": "^4.7.2",
-    "typescript": "^5.3.3",
-    "web-vitals": "^2.1.0",
-    "youtube-search-api": "^1.2.1"
+    "typescript": "^5.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node --loader ts-node/esm api/server.ts",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -55,6 +44,13 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/user-event": "^13.2.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.13",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.2.18",
     "@types/socket.io-client": "^3.0.0",
     "ts-node": "^10.9.2"
   }

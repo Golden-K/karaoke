@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "api", "types.ts"]
+  "include": ["src", "types.ts"]
 }
