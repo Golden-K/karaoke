@@ -1,6 +1,7 @@
 import { createServer } from "http";
-import { Server } from "socket.io";
-import { QueueItem } from "../types";
+import { Server, Socket } from "socket.io";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { QueueItem } from "./types";
 
 const VIDEO_STATUS = {
   PAUSED: "PAUSED",
@@ -8,25 +9,31 @@ const VIDEO_STATUS = {
 } as const;
 let status: keyof typeof VIDEO_STATUS = VIDEO_STATUS.PAUSED;
 let queue: QueueItem[] = [];
-
-// for (let i = 0; i < 50; i++) {
-//   queue.push({
-//     karaokeName: "TEST USER",
-//     videoId: "dQw4w9WgXcQ",
-//     title: crypto.randomUUID(),
-//     id: crypto.randomUUID(),
-//   });
-// }
+const connections: Socket<
+  DefaultEventsMap,
+  DefaultEventsMap,
+  DefaultEventsMap,
+  any
+>[] = [];
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
     origin:
-      process.env.NODE_ENV === "production" ? false : ["http://localhost:3000"],
+      process.env.NODE_ENV === "production"
+        ? ["https://karaoke.junglecorp.org"]
+        : ["http://localhost:3000"],
   },
 });
 
 io.on("connection", (socket) => {
+  connections.push(socket);
+  console.log(" %s sockets is connected", connections.length);
+
+  socket.on("disconnect", () => {
+    connections.splice(connections.indexOf(socket), 1);
+  });
+
   socket.emit("update_queue", queue);
 
   socket.on("add_song", (queueItem) => {

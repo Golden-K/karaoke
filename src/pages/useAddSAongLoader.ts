@@ -12,6 +12,8 @@ for (let i = 1; i <= MAX_API_KEYS; i++) {
   apiKeys.push(process.env[keyName]);
 }
 
+console.log(apiKeys);
+
 export const useAddSongLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);
   const [isLoading, setIsLoading] = useState(false);

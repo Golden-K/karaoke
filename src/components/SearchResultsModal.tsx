@@ -28,6 +28,7 @@ export const SearchResultsModal = ({
             <ListItem
               key={`${result.title}-${index}`}
               onClick={() => handleSelectSong(result)}
+              style={styles.listItem}
             >
               <a href="#">{result.title}</a>
             </ListItem>
@@ -39,7 +40,10 @@ export const SearchResultsModal = ({
 };
 
 const styles = {
-  list: { backgroundColor: "white" },
+  list: {
+    backgroundColor: "white",
+    width: "100%",
+  },
   listContainer: {
     display: "flex",
     justifyContent: "center",
@@ -49,5 +53,9 @@ const styles = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "100%",
+  },
+  listItem: {
+    display: "flex",
+    justifyContent: "center",
   },
 } as const;
