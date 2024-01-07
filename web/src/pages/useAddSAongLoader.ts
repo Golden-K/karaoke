@@ -68,7 +68,6 @@ export const useAddSongLoader = () => {
         part: "snippet, id",
         q: "karafun karaoke " + searchTerm,
         type: "video",
-        videoEmbeddable: true,
       };
       const parsedParams = Object.entries(params).map(
         ([key, value]) => `${key}=${value}`
