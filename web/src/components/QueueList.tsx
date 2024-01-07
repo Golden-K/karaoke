@@ -79,7 +79,6 @@ const styles = {
     backgroundColor: "white",
     borderTop: "3px groove orange",
     color: "black",
-    cursor: "grab",
     msUserSelect: "none",
     overflow: "auto",
     userSelect: "none",

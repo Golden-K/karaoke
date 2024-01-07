@@ -54,7 +54,6 @@ export const useLyricsLoader = () => {
   }, [isStartingNewSong]);
 
   const handleVideoStateChange = (event: YouTubeEvent) => {
-    console.log(event);
     switch (event.data) {
       case 0:
         socket.emit("next_song", console.error);
