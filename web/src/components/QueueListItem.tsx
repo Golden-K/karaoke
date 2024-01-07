@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { QueueItem } from "../../types";
 
 type QueueItemProps = {
@@ -6,10 +8,14 @@ type QueueItemProps = {
 
 export const QueueListItem = ({ item }: QueueItemProps) => {
   return (
-    <span style={styles.itemContainer}>
-      <div style={{ flex: 1 }}>{item.karaokeName}</div>
-      <div style={{ flex: 1 }}>{item.title}</div>
-    </span>
+    <Box style={styles.itemContainer}>
+      <Typography variant="h4" style={{ flex: 1 }}>
+        {item.karaokeName}
+      </Typography>
+      <Typography variant="h4" style={{ flex: 1 }}>
+        {item.title}
+      </Typography>
+    </Box>
   );
 };
 
