@@ -54,6 +54,9 @@ export const Queue = () => {
         <NavLink to="/">
           <Button>Add Song</Button>
         </NavLink>
+        <NavLink to="/lyrics">
+          <Button>Lyrics</Button>
+        </NavLink>
         <Box style={styles.spacer} />
         {queue.length > 1 ? (
           <IconButton onClick={handleSkip}>
