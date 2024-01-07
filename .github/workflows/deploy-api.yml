@@ -25,7 +25,7 @@ jobs:
       - name: Deploy to Linode
         uses: easingthemes/ssh-deploy@main
         env:
-          SOURCE: "./api"
+          SOURCE: "./api/"
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
