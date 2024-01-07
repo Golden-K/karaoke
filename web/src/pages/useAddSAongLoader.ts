@@ -64,7 +64,7 @@ export const useAddSongLoader = () => {
       setIsLoading(true);
       const params = {
         key: apiKeys[apiKeyIndex],
-        maxResults: 3,
+        maxResults: 7,
         part: "snippet, id",
         q: "karaoke with lyrics " + searchTerm,
         type: "video",
@@ -96,6 +96,7 @@ export const useAddSongLoader = () => {
         items.map((item: Item) => ({
           ...item.snippet,
           videoId: item.id.videoId,
+          channelTitle: item.channelTitle,
         }))
       );
       setIsLoading(false);

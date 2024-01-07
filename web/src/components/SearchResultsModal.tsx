@@ -32,7 +32,7 @@ export const SearchResultsModal = ({
               style={styles.listItem}
             >
               <Button type="link" href="#">
-                {result.title}
+                {result.title} - {result.channelTitle}
               </Button>
             </ListItem>
           ))}

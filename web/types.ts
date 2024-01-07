@@ -27,6 +27,7 @@ export type Id = {
 export type Item = {
   snippet: Snippet;
   id: Id;
+  channelTitle: string;
 };
 
 export type SongItem = Snippet & Id;
@@ -41,4 +42,5 @@ export type QueueItem = {
   title: string;
   videoId: string;
   id: string;
+  channelTitle: string;
 };
