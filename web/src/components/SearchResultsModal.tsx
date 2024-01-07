@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Modal from "@mui/material/Modal";
@@ -30,7 +31,9 @@ export const SearchResultsModal = ({
               onClick={() => handleSelectSong(result)}
               style={styles.listItem}
             >
-              <a href="#">{result.title}</a>
+              <Button type="link" href="#">
+                {result.title}
+              </Button>
             </ListItem>
           ))}
         </List>
