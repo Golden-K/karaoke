@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import { Alert, Item, QueueItem, SongItem } from "../../types";
 import { socket } from "../socket";
 
-const { REACT_APP_GOOGLE_API_KEY } = process.env;
+const MAX_API_KEYS = 10;
+const apiKeys: Array<string | undefined> = [];
+
+// YouTube's API key is rate limited to 10,000 "units" per day, and searches cost 100 "units"
+// This is a hack to get around that limit by using 10 API keys, they even recommend it themselves
+for (let i = 1; i <= MAX_API_KEYS; i++) {
+  const keyName = `REACT_APP_GOOGLE_API_KEY_${i}`;
+  apiKeys.push(process.env[keyName]);
+}
 
 export const useAddSongLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);
@@ -11,6 +19,7 @@ export const useAddSongLoader = () => {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
+  const [apiKeyIndex, setApiKeyIndex] = useState(0);
 
   useEffect(() => {
     socket.emit("get_queue", console.error);
@@ -54,7 +63,7 @@ export const useAddSongLoader = () => {
     try {
       setIsLoading(true);
       const params = {
-        key: REACT_APP_GOOGLE_API_KEY,
+        key: apiKeys[apiKeyIndex],
         maxResults: 3,
         part: "snippet, id",
         q: "karafun karaoke " + searchTerm,
@@ -67,7 +76,20 @@ export const useAddSongLoader = () => {
       const response = await fetch(
         `https://www.googleapis.com/youtube/v3/search?${parsedParams.join("&")}`
       );
-      if (response.status !== 200) throw new Error("Error searching songs");
+      if (response.status === 403) {
+        setApiKeyIndex((prev) => {
+          if (prev === MAX_API_KEYS - 1) {
+            throw new Error("No more API keys available");
+          }
+          return prev + 1;
+        });
+        // If we have another API key, we'll wait a second then make the request again
+        setTimeout(handleSearch, 1000);
+        return;
+      }
+      if (response.status !== 200) {
+        throw new Error("Error searching songs");
+      }
       const data = await response.json();
       const { items } = data;
       setSearchRestults(
