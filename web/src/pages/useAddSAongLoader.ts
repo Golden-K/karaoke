@@ -66,8 +66,9 @@ export const useAddSongLoader = () => {
         key: apiKeys[apiKeyIndex],
         maxResults: 3,
         part: "snippet, id",
-        q: "karafun karaoke " + searchTerm,
+        q: "karaoke with lyrics " + searchTerm,
         type: "video",
+        videoEmbeddable: true,
       };
       const parsedParams = Object.entries(params).map(
         ([key, value]) => `${key}=${value}`
