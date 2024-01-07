@@ -8,8 +8,8 @@ type QueueWidgetProps = {
 export const QueueWidget = ({ queue }: QueueWidgetProps) => {
   return queue.length ? (
     <div style={styles.container}>
-      {queue.slice(1, 2).map((item, index) => (
-        <QueueListItem item={item} key={`${item.videoId}-${index}`} />
+      {queue.slice(1, 3).map((item, index) => (
+        <QueueListItem item={item} key={`${item.videoId}-${index}`} isWidget />
       ))}
     </div>
   ) : null;
