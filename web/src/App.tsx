@@ -1,11 +1,11 @@
 import { ErrorBoundary } from "react-error-boundary";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import { AddSong } from "./pages/AddSong";
 import { Lyrics } from "./pages/Lyrics";
 import { Queue } from "./pages/Queue";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <AddSong />,
