@@ -13,9 +13,11 @@ export const QueueListItem = ({ isWidget, item }: QueueItemProps) => {
       <Typography variant={isWidget ? "h4" : "body1"} style={styles.itemText}>
         {item.karaokeName}
       </Typography>
-      <Typography variant={isWidget ? "h4" : "body1"} style={styles.itemText}>
-        {item.title}
-      </Typography>
+      {isWidget ? (
+        <Typography variant={isWidget ? "h4" : "body1"} style={styles.itemText}>
+          {item.title}
+        </Typography>
+      ) : null}
     </Box>
   );
 };
