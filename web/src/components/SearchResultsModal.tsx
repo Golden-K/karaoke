@@ -22,6 +22,7 @@ export const SearchResultsModal = ({
       onClose={clearSearchResults}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      style={styles.container}
     >
       <Box style={styles.listContainer}>
         <List style={styles.list}>
@@ -29,10 +30,19 @@ export const SearchResultsModal = ({
             <ListItem
               key={`${result.title}-${index}`}
               onClick={() => handleSelectSong(result)}
-              style={styles.listItem}
+              style={styles.listItemContainer}
             >
-              <Button type="link" href="#">
-                {result.title} - {result.channelTitle}
+              <Button type="link" href="#" style={styles.listItem}>
+                <Box>{result.title}</Box>
+                <Box style={styles.thumbnailContainer}>
+                  <img
+                    src={result.thumbnails.medium.url}
+                    alt={result.title}
+                    height="50px"
+                    width="auto"
+                  />
+                  <Box>{result.channelTitle}</Box>
+                </Box>
               </Button>
             </ListItem>
           ))}
@@ -43,22 +53,38 @@ export const SearchResultsModal = ({
 };
 
 const styles = {
+  container: { maxHeight: "CALC(100vh - 64px)", overflowY: "auto" },
   list: {
     backgroundColor: "white",
     width: "100%",
+    padding: 0,
   },
   listContainer: {
     display: "flex",
     justifyContent: "center",
     alignSelf: "center",
     position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
     width: "100%",
   },
   listItem: {
     display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    width: "100%",
+    color: "white",
+  },
+  listItemContainer: {
+    display: "flex",
     justifyContent: "center",
+    alignItems: "flex-start",
+    border: "3px groove steelblue",
+    padding: 0,
+    background: "radial-gradient(steelblue, black)",
+  },
+  thumbnailContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginLeft: 16,
   },
 } as const;

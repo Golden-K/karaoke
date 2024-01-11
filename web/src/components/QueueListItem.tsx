@@ -12,7 +12,7 @@ export const QueueListItem = ({ item }: QueueItemProps) => {
       <Typography variant="body1" style={styles.itemText}>
         {item.karaokeName}
       </Typography>
-      <Typography variant="body1" style={styles.itemText}>
+      <Typography variant="caption" style={styles.itemText}>
         {item.title}
       </Typography>
     </Box>
@@ -23,8 +23,10 @@ const styles = {
   itemContainer: {
     flex: 1,
     display: "flex",
+    flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
+    textAlign: "center",
   },
   itemText: { flex: 1 },
 } as const;

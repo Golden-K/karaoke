@@ -76,5 +76,6 @@ const styles = {
     overflow: "auto",
     userSelect: "none",
     WebkitUserSelect: "none",
+    padding: 0,
   },
 } as const;

@@ -44,7 +44,7 @@ export const Home = () => {
     <Box style={styles.container}>
       {queue.length ? (
         <Box style={styles.queueContainer}>
-          <Typography variant="h4" style={styles.currentlyContainer}>
+          <Typography variant="body1" style={styles.currentlyContainer}>
             <div style={styles.currentlySingingContainer}>
               <b>Currently Singing</b>
               <span style={styles.currentSinging}>{queue[0].karaokeName}</span>
@@ -170,7 +170,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    marginTop: 32,
     overflow: "hidden",
     width: "100%",
   },
@@ -178,7 +177,6 @@ const styles = {
   inputContainer: {
     display: "flex",
     flexDirection: "column",
-    padding: "0 18px",
   },
   optionsContainer: {
     alignItems: "flex-end",
