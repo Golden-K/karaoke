@@ -13,7 +13,8 @@ export const Lyrics = () => {
     <div style={styles.container}>
       <YouTube
         style={styles.player}
-        videoId={queue[0]?.videoId ?? "dQw4w9WgXcQ"}
+        videoId={queue[0]?.videoId ?? "8leAAwMIigI"}
+        // videoId={queue[0]?.videoId ?? "dQw4w9WgXcQ"}
         opts={playerOptions}
         onReady={(e) => (playerRef.current = e)}
         onStateChange={handleVideoStateChange}

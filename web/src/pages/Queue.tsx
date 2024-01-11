@@ -2,14 +2,16 @@ import Pause from "@mui/icons-material/Pause";
 import Play from "@mui/icons-material/PlayArrow";
 import Skip from "@mui/icons-material/SkipNext";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { QueueList } from "../components/QueueList";
 import { VIDEO_STATUS } from "../constants";
 import { useQueueLoader } from "./useQueueLoader";
 
 export const Queue = () => {
+  const navigate = useNavigate();
   const { actions, state } = useQueueLoader();
   const {
     handleDelete,
@@ -50,7 +52,7 @@ export const Queue = () => {
       <Box style={styles.spacer} />
 
       <Box style={styles.controlsContainer}>
-        <NavLink to="/">Add Song</NavLink>
+        <Button onClick={() => navigate("/")}>Add Song</Button>
         <Box style={styles.spacer} />
         {queue.length > 1 ? (
           <IconButton onClick={handleSkip}>

@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 import Snackbar from "@mui/material/Snackbar";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
 import { SearchResultsModal } from "../components/SearchResultsModal";
 import { useAddSongLoader } from "./useAddSAongLoader";
 
 export const AddSong = () => {
+  const navigate = useNavigate();
   const { actions, state } = useAddSongLoader();
   const {
     clearSearchResults,
@@ -37,7 +38,7 @@ export const AddSong = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        <NavLink to="/queue">Queue</NavLink>
+        <Button onClick={() => navigate("/queue")}>Queue</Button>
 
         <Box style={styles.spacer} />
 
