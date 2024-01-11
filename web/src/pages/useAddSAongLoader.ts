@@ -19,7 +19,6 @@ export const useAddSongLoader = () => {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
-  const [apiKeyIndex, setApiKeyIndex] = useState(0);
 
   useEffect(() => {
     socket.emit("get_queue", console.error);
@@ -53,7 +52,7 @@ export const useAddSongLoader = () => {
     localStorage.setItem("karaokeName", karaokeName);
   }, [karaokeName]);
 
-  const handleSearch = async (apiKey?: string) => {
+  const handleSearch = async (apiKeyIndex = 0) => {
     if (!karaokeName || !searchTerm) {
       return setAlert({
         message: "Please enter a karaoke name and search term",
@@ -63,7 +62,7 @@ export const useAddSongLoader = () => {
     try {
       setIsLoading(true);
       const params = {
-        key: apiKey ?? apiKeys[apiKeyIndex],
+        key: apiKeys[apiKeyIndex],
         maxResults: 7,
         part: "snippet, id",
         q: "karaoke with lyrics " + searchTerm,
@@ -77,15 +76,11 @@ export const useAddSongLoader = () => {
         `https://www.googleapis.com/youtube/v3/search?${parsedParams.join("&")}`
       );
       if (response.status === 403) {
-        setApiKeyIndex((prev) => {
-          if (prev === MAX_API_KEYS - 1) {
-            throw new Error("No more API keys available");
-          }
-          // If we have another API key, we'll wait a second then make the request again
-          setTimeout(() => handleSearch(apiKeys[prev + 1]), 1000);
-          return prev + 1;
-        });
-        return;
+        if (apiKeyIndex === MAX_API_KEYS - 1) {
+          throw new Error("No more API keys available");
+        }
+        // If we have another API key, we'll wait a second then make the request again
+        handleSearch(apiKeyIndex + 1);
       }
       if (response.status !== 200) {
         throw new Error("Error searching songs");
