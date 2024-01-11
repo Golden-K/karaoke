@@ -64,7 +64,7 @@ export const AddSong = () => {
 
         <Box style={styles.spacer} />
 
-        <Button onClick={handleSearch}>Search</Button>
+        <Button onClick={() => handleSearch()}>Search</Button>
       </Box>
 
       <Snackbar
