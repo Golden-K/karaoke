@@ -53,7 +53,7 @@ export const useAddSongLoader = () => {
     localStorage.setItem("karaokeName", karaokeName);
   }, [karaokeName]);
 
-  const handleSearch = async () => {
+  const handleSearch = async (apiKey?: string) => {
     if (!karaokeName || !searchTerm) {
       return setAlert({
         message: "Please enter a karaoke name and search term",
@@ -63,7 +63,7 @@ export const useAddSongLoader = () => {
     try {
       setIsLoading(true);
       const params = {
-        key: apiKeys[apiKeyIndex],
+        key: apiKey ?? apiKeys[apiKeyIndex],
         maxResults: 7,
         part: "snippet, id",
         q: "karaoke with lyrics " + searchTerm,
@@ -82,7 +82,7 @@ export const useAddSongLoader = () => {
             throw new Error("No more API keys available");
           }
           // If we have another API key, we'll wait a second then make the request again
-          setTimeout(handleSearch, 1000);
+          setTimeout(() => handleSearch(apiKeys[prev + 1]), 1000);
           return prev + 1;
         });
         return;
