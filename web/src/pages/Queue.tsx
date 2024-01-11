@@ -2,7 +2,6 @@ import Pause from "@mui/icons-material/Pause";
 import Play from "@mui/icons-material/PlayArrow";
 import Skip from "@mui/icons-material/SkipNext";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
@@ -51,9 +50,7 @@ export const Queue = () => {
       <Box style={styles.spacer} />
 
       <Box style={styles.controlsContainer}>
-        <NavLink to="/">
-          <Button>Add Song</Button>
-        </NavLink>
+        <NavLink to="/">Add Song</NavLink>
         <Box style={styles.spacer} />
         {queue.length > 1 ? (
           <IconButton onClick={handleSkip}>

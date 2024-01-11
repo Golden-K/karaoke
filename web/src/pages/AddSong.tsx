@@ -37,9 +37,7 @@ export const AddSong = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        <NavLink to="/queue">
-          <Button>Queue</Button>
-        </NavLink>
+        <NavLink to="/queue">Queue</NavLink>
 
         <Box style={styles.spacer} />
 
