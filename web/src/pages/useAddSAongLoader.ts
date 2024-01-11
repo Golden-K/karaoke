@@ -80,7 +80,7 @@ export const useAddSongLoader = () => {
           throw new Error("No more API keys available");
         }
         // If we have another API key, we'll wait a second then make the request again
-        handleSearch(apiKeyIndex + 1);
+        return handleSearch(apiKeyIndex + 1);
       }
       if (response.status !== 200) {
         throw new Error("Error searching songs");
