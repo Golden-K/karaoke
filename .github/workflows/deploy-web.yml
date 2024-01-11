@@ -35,6 +35,7 @@ jobs:
           echo "REACT_APP_GOOGLE_API_KEY_8=${{ secrets.REACT_APP_GOOGLE_API_KEY_8 }}" >>.env
           echo "REACT_APP_GOOGLE_API_KEY_9=${{ secrets.REACT_APP_GOOGLE_API_KEY_9 }}" >>.env
           echo "REACT_APP_GOOGLE_API_KEY_10=${{ secrets.REACT_APP_GOOGLE_API_KEY_10 }}" >>.env
+          echo "REACT_APP_GOOGLE_API_KEY_11=${{ secrets.REACT_APP_GOOGLE_API_KEY_11 }}" >>.env
 
       - name: 🐳 Build
         run: cd web && yarn && yarn build

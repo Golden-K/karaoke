@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert, Item, QueueItem, SongItem } from "../../types";
 import { socket } from "../socket";
 
-const MAX_API_KEYS = 10;
+const MAX_API_KEYS = 11;
 const apiKeys: Array<string | undefined> = [];
 
 // YouTube's API key is rate limited to 10,000 "units" per day, and searches cost 100 "units", which equates to 100 searches...
