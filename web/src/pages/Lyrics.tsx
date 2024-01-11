@@ -1,5 +1,4 @@
 import YouTube from "react-youtube";
-import { QueueWidget } from "../components/QueueWidget";
 import { useLyricsLoader } from "./useLyricsLoader";
 
 export const Lyrics = () => {
@@ -19,7 +18,7 @@ export const Lyrics = () => {
         onReady={(e) => (playerRef.current = e)}
         onStateChange={handleVideoStateChange}
       />
-      <QueueWidget queue={queue} />
+      {/* <QueueWidget queue={queue} /> */}
     </div>
   );
 };
