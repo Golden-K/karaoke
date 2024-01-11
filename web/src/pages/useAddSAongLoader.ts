@@ -52,7 +52,7 @@ export const useAddSongLoader = () => {
     localStorage.setItem("karaokeName", karaokeName);
   }, [karaokeName]);
 
-  const handleSearch = async (apiKeyIndex = 0) => {
+  const handleSearch = async (apiKeyIndex = 0): Promise<void> => {
     if (!karaokeName || !searchTerm) {
       return setAlert({
         message: "Please enter a karaoke name and search term",
