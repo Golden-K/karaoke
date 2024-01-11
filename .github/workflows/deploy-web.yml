@@ -27,24 +27,6 @@ jobs:
           cd web
           echo "REACT_APP_GOOGLE_API_KEY_1=${{ secrets.REACT_APP_GOOGLE_API_KEY_1 }}" >>.env
           echo "REACT_APP_GOOGLE_API_KEY_2=${{ secrets.REACT_APP_GOOGLE_API_KEY_2 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_3=${{ secrets.REACT_APP_GOOGLE_API_KEY_3 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_4=${{ secrets.REACT_APP_GOOGLE_API_KEY_4 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_5=${{ secrets.REACT_APP_GOOGLE_API_KEY_5 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_6=${{ secrets.REACT_APP_GOOGLE_API_KEY_6 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_7=${{ secrets.REACT_APP_GOOGLE_API_KEY_7 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_8=${{ secrets.REACT_APP_GOOGLE_API_KEY_8 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_9=${{ secrets.REACT_APP_GOOGLE_API_KEY_9 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_10=${{ secrets.REACT_APP_GOOGLE_API_KEY_10 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_11=${{ secrets.REACT_APP_GOOGLE_API_KEY_11 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_12=${{ secrets.REACT_APP_GOOGLE_API_KEY_12 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_13=${{ secrets.REACT_APP_GOOGLE_API_KEY_13 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_14=${{ secrets.REACT_APP_GOOGLE_API_KEY_14 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_15=${{ secrets.REACT_APP_GOOGLE_API_KEY_15 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_16=${{ secrets.REACT_APP_GOOGLE_API_KEY_16 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_17=${{ secrets.REACT_APP_GOOGLE_API_KEY_17 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_18=${{ secrets.REACT_APP_GOOGLE_API_KEY_18 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_19=${{ secrets.REACT_APP_GOOGLE_API_KEY_19 }}" >>.env
-          echo "REACT_APP_GOOGLE_API_KEY_20=${{ secrets.REACT_APP_GOOGLE_API_KEY_20 }}" >>.env
 
       - name: 🐳 Build
         run: cd web && yarn && yarn build

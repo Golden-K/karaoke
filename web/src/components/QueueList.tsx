@@ -10,9 +10,9 @@ import { QueueListItem } from "./QueueListItem";
 
 type QueueListProps = {
   queue: QueueItem[];
-  handleDelete?: (id: string) => void;
-  handleMoveUp?: (id: string) => void;
-  handleMoveDown?: (id: string) => void;
+  handleDelete: (id: string) => void;
+  handleMoveUp: (id: string) => void;
+  handleMoveDown: (id: string) => void;
 };
 
 export const QueueList = ({
@@ -28,37 +28,30 @@ export const QueueList = ({
           key={`${item.videoId}-${index}`}
           style={styles.queueItemContainer}
         >
-          {handleDelete ? (
-            <IconButton
-              aria-label="delete"
-              onClick={() => handleDelete(item.id)}
-            >
-              <Delete color="error" />
-            </IconButton>
-          ) : null}
+          <IconButton aria-label="delete" onClick={() => handleDelete(item.id)}>
+            <Delete color="error" />
+          </IconButton>
           <QueueListItem item={item} />
           <Box style={styles.actionsContainer} />
-          {handleMoveDown ? (
-            index < queue.length - 1 ? (
-              <IconButton
-                aria-label="down"
-                onClick={() => handleMoveDown(item.id)}
-              >
-                <Down color="warning" />
-              </IconButton>
-            ) : (
-              <Box style={styles.iconSpacer} />
-            )
-          ) : null}
-          {handleMoveUp ? (
-            index > 0 ? (
-              <IconButton aria-label="up" onClick={() => handleMoveUp(item.id)}>
-                <Up color="success" />
-              </IconButton>
-            ) : (
-              <Box style={styles.iconSpacer} />
-            )
-          ) : null}
+
+          {index < queue.length - 1 ? (
+            <IconButton
+              aria-label="down"
+              onClick={() => handleMoveDown(item.id)}
+            >
+              <Down color="warning" />
+            </IconButton>
+          ) : (
+            <Box style={styles.iconSpacer} />
+          )}
+
+          {index > 0 ? (
+            <IconButton aria-label="up" onClick={() => handleMoveUp(item.id)}>
+              <Up color="success" />
+            </IconButton>
+          ) : (
+            <Box style={styles.iconSpacer} />
+          )}
         </ListItem>
       ))}
     </List>

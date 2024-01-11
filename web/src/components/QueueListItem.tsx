@@ -3,21 +3,18 @@ import Typography from "@mui/material/Typography";
 import { QueueItem } from "../../types";
 
 type QueueItemProps = {
-  isWidget?: boolean;
   item: QueueItem;
 };
 
-export const QueueListItem = ({ isWidget, item }: QueueItemProps) => {
+export const QueueListItem = ({ item }: QueueItemProps) => {
   return (
     <Box style={styles.itemContainer}>
-      <Typography variant={isWidget ? "h4" : "body1"} style={styles.itemText}>
+      <Typography variant="body1" style={styles.itemText}>
         {item.karaokeName}
       </Typography>
-      {isWidget ? (
-        <Typography variant={isWidget ? "h4" : "body1"} style={styles.itemText}>
-          {item.title}
-        </Typography>
-      ) : null}
+      <Typography variant="body1" style={styles.itemText}>
+        {item.title}
+      </Typography>
     </Box>
   );
 };

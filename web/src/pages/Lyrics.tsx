@@ -13,12 +13,10 @@ export const Lyrics = () => {
       <YouTube
         style={styles.player}
         videoId={queue[0]?.videoId ?? "5bCwue1d9Js"}
-        // videoId={queue[0]?.videoId ?? "dQw4w9WgXcQ"}
         opts={playerOptions}
         onReady={(e) => (playerRef.current = e)}
         onStateChange={handleVideoStateChange}
       />
-      {/* <QueueWidget queue={queue} /> */}
     </div>
   );
 };

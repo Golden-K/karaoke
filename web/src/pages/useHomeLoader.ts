@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
 import { Alert, Item, QueueItem, SongItem } from "../../types";
+import { VIDEO_STATUS } from "../constants";
 import { socket } from "../socket";
 
-const MAX_API_KEYS = 20;
+const MAX_API_KEYS = 2;
 const apiKeys: Array<string | undefined> = [];
 
 // YouTube's API key is rate limited to 10,000 "units" per day, and searches cost 100 "units", which equates to 100 searches...
-// This is a hack to get around that limit by using 10 API keys, they even recommend it themselves
+// This is a hack to get around that limit by using 2 API keys from different projects
 for (let i = 1; i <= MAX_API_KEYS; i++) {
   const keyName = `REACT_APP_GOOGLE_API_KEY_${i}`;
   apiKeys.push(process.env[keyName]);
 }
 
-export const useAddSongLoader = () => {
+export const useHomeLoader = () => {
   const [alert, setAlert] = useState<Alert | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [karaokeName, setKaraokeName] = useState("");
   const [queue, setQueue] = useState<QueueItem[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [status, setStatus] = useState<keyof typeof VIDEO_STATUS>(
+    VIDEO_STATUS.PAUSED
+  );
 
   useEffect(() => {
     socket.emit("get_queue", console.error);
+    socket.emit("get_video_status", console.error);
 
     socket.on("update_queue", setQueue);
+    socket.on("update_status", setStatus);
     socket.on("add_song_ack", (data) => {
       setIsLoading(false);
       if (data.status === "error") {
@@ -44,6 +50,7 @@ export const useAddSongLoader = () => {
     return () => {
       socket.off("add_song_ack");
       socket.off("update_queue");
+      socket.off("update_status");
     };
   }, []);
 
@@ -51,6 +58,15 @@ export const useAddSongLoader = () => {
     if (!karaokeName) return;
     localStorage.setItem("karaokeName", karaokeName);
   }, [karaokeName]);
+
+  const clearSearchResults = () => {
+    setSearchRestults([]);
+  };
+  const moveSong = (fromIndex: number, toIndex: number) => {
+    const item = queue.splice(fromIndex + 1, 1)[0];
+    queue.splice(toIndex - 1, 0, item);
+    socket.emit("reorder_queue", queue, console.error);
+  };
 
   const handleSearch = async (apiKeyIndex = 0): Promise<void> => {
     if (!karaokeName || !searchTerm) {
@@ -100,11 +116,6 @@ export const useAddSongLoader = () => {
       setAlert({ message: error.message, severity: "error" });
     }
   };
-
-  const clearSearchResults = () => {
-    setSearchRestults([]);
-  };
-
   const handleSelectSong = (song: SongItem) => {
     if (!karaokeName) {
       return setAlert({
@@ -121,16 +132,41 @@ export const useAddSongLoader = () => {
     };
     socket.emit("add_song", dataForQueue, console.error);
   };
-
   const handleCloseSnackbar = () => {
     setAlert(null);
+  };
+  const handleDelete = (id: string) => {
+    socket.emit("delete_from_queue", id, console.error);
+  };
+  const handleMoveUp = (id: string) => {
+    const index = queue.findIndex((item) => item.id === id);
+    moveSong(index - 1, index);
+  };
+  const handleMoveDown = (id: string) => {
+    const index = queue.findIndex((item) => item.id === id);
+    moveSong(index, index + 1);
+  };
+  const handlePause = () => {
+    socket.emit("set_status", VIDEO_STATUS.PAUSED, console.error);
+  };
+  const handleResume = () => {
+    socket.emit("set_status", VIDEO_STATUS.PLAYING, console.error);
+  };
+  const handleSkip = () => {
+    socket.emit("next_song", console.error);
   };
 
   const actions = {
     clearSearchResults,
     handleCloseSnackbar,
+    handleDelete,
+    handleMoveDown,
+    handleMoveUp,
+    handlePause,
+    handleResume,
     handleSearch,
     handleSelectSong,
+    handleSkip,
     setKaraokeName,
     setSearchTerm,
   };
@@ -141,6 +177,7 @@ export const useAddSongLoader = () => {
     queue,
     searchResults,
     searchTerm,
+    status,
   };
   return { actions, state };
 };

@@ -1,27 +1,44 @@
 import Pause from "@mui/icons-material/Pause";
 import Play from "@mui/icons-material/PlayArrow";
 import Skip from "@mui/icons-material/SkipNext";
+import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Input from "@mui/material/Input";
+import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
+import { SearchResultsModal } from "../components/SearchResultsModal";
 import { VIDEO_STATUS } from "../constants";
-import { useQueueLoader } from "./useQueueLoader";
+import { useHomeLoader } from "./useHomeLoader";
 
-export const Queue = () => {
-  const navigate = useNavigate();
-  const { actions, state } = useQueueLoader();
+export const Home = () => {
+  const { actions, state } = useHomeLoader();
   const {
+    clearSearchResults,
+    handleCloseSnackbar,
     handleDelete,
-    handleMoveUp,
     handleMoveDown,
+    handleMoveUp,
     handlePause,
     handleResume,
+    handleSearch,
+    handleSelectSong,
     handleSkip,
+    setKaraokeName,
+    setSearchTerm,
   } = actions;
-  const { queue, status } = state;
+  const {
+    alert,
+    isLoading,
+    karaokeName,
+    queue,
+    searchResults,
+    searchTerm,
+    status,
+  } = state;
 
   return (
     <Box style={styles.container}>
@@ -38,7 +55,8 @@ export const Queue = () => {
               <span style={styles.marquee}>{queue[0].title}</span>
             </div>
           </Typography>
-          <Box style={styles.listContainer}>
+
+          <Box style={styles.fullWidth}>
             <QueueList
               queue={queue.slice(1)}
               handleDelete={handleDelete}
@@ -51,9 +69,13 @@ export const Queue = () => {
 
       <Box style={styles.spacer} />
 
-      <Box style={styles.controlsContainer}>
-        <Button onClick={() => navigate("/")}>Add Song</Button>
-        <Box style={styles.spacer} />
+      <SearchResultsModal
+        searchResults={searchResults}
+        handleSelectSong={handleSelectSong}
+        clearSearchResults={clearSearchResults}
+      />
+
+      <Box style={styles.optionsContainer}>
         {queue.length > 1 ? (
           <IconButton onClick={handleSkip}>
             <Skip color="primary" fontSize="large" />
@@ -70,26 +92,56 @@ export const Queue = () => {
             </IconButton>
           )
         ) : null}
+
+        <Box style={styles.spacer} />
+
+        <Box style={styles.inputContainer}>
+          <Input
+            type="text"
+            placeholder="Karaoke Name"
+            value={karaokeName}
+            onChange={({ target }) => setKaraokeName(target.value)}
+          />
+          <Input
+            type="text"
+            placeholder="Artist and Song"
+            value={searchTerm}
+            onChange={({ target }) => setSearchTerm(target.value)}
+            onKeyUpCapture={({ key }) => {
+              if (key === "Enter") {
+                handleSearch();
+              }
+            }}
+          />
+        </Box>
+
+        <Box style={styles.spacer} />
+
+        <Button onClick={() => handleSearch()}>Search</Button>
       </Box>
+
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        open={!!alert}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={alert?.severity}>
+          {alert?.message}!
+        </Alert>
+      </Snackbar>
+
+      <LoadingSpinner isLoading={isLoading} />
     </Box>
   );
 };
 
 const styles = {
   container: {
-    alignItems: "center",
-    display: "flex",
     flexDirection: "column",
-    height: "100vh",
-  },
-  controlsContainer: {
-    alignItems: "center",
-    backgroundColor: "white",
-    bottom: 0,
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    position: "sticky",
+    height: "100vh",
+    alignItems: "center",
     width: "100%",
   },
   currentlyContainer: {
@@ -122,11 +174,20 @@ const styles = {
     overflow: "hidden",
     width: "100%",
   },
-  listContainer: {
-    borderBottom: "3px groove orange",
-    marginTop: 16,
-    padding: 0,
+  fullWidth: { width: "100%" },
+  inputContainer: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "0 18px",
+  },
+  optionsContainer: {
+    alignItems: "flex-end",
+    backgroundColor: "white",
+    display: "flex",
+    flexDiection: "row",
     width: "100%",
+    position: "sticky",
+    bottom: 0,
   },
   queueContainer: { width: "100%" },
   spacer: { flex: 1 },
