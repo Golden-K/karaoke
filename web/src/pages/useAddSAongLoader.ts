@@ -81,10 +81,10 @@ export const useAddSongLoader = () => {
           if (prev === MAX_API_KEYS - 1) {
             throw new Error("No more API keys available");
           }
+          // If we have another API key, we'll wait a second then make the request again
+          setTimeout(handleSearch, 1000);
           return prev + 1;
         });
-        // If we have another API key, we'll wait a second then make the request again
-        setTimeout(handleSearch, 1000);
         return;
       }
       if (response.status !== 200) {
