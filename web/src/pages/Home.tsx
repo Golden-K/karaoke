@@ -181,10 +181,9 @@ const styles = {
   inputContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
   },
   optionsContainer: {
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     backgroundColor: "white",
     display: "flex",
     flexDiection: "row",
