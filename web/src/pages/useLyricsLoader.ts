@@ -47,6 +47,13 @@ export const useLyricsLoader = () => {
       socket.emit("get_queue", console.error);
       setIsStartingNewSong(true);
     });
+    socket.on("restart_song_ack", () => {
+      if (playerRef.current) {
+        playerRef.current.target.seekTo(0);
+        playerRef.current.target.playVideo();
+        setIsStartingNewSong(false);
+      }
+    });
     return () => {
       socket.off("update_status");
       socket.off("update_queue");

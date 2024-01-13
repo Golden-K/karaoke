@@ -149,6 +149,9 @@ export const useHomeLoader = () => {
   const handlePause = () => {
     socket.emit("set_status", VIDEO_STATUS.PAUSED, console.error);
   };
+  const handleRestartSong = () => {
+    socket.emit("restart_song", console.error);
+  };
   const handleResume = () => {
     socket.emit("set_status", VIDEO_STATUS.PLAYING, console.error);
   };
@@ -163,6 +166,7 @@ export const useHomeLoader = () => {
     handleMoveDown,
     handleMoveUp,
     handlePause,
+    handleRestartSong,
     handleResume,
     handleSearch,
     handleSelectSong,

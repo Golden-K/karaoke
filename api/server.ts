@@ -70,6 +70,10 @@ io.on("connection", (socket) => {
     io.emit("update_queue", queue);
   });
 
+  socket.on("restart_song", () => {
+    io.emit("restart_song_ack");
+  });
+
   socket.on("set_status", (newStatus) => {
     status = newStatus;
     io.emit("update_status", status);

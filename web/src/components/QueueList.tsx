@@ -64,7 +64,7 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
   },
-  listContainer: { padding: 0 },
+  listContainer: { padding: 0, userSelect: "none" },
   iconSpacer: { width: 40 },
   queueItemContainer: {
     display: "flex",

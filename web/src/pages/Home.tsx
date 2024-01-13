@@ -1,6 +1,7 @@
 import Pause from "@mui/icons-material/Pause";
 import Play from "@mui/icons-material/PlayArrow";
 import Skip from "@mui/icons-material/SkipNext";
+import Restart from "@mui/icons-material/SkipPrevious";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -23,6 +24,7 @@ export const Home = () => {
     handleMoveDown,
     handleMoveUp,
     handlePause,
+    handleRestartSong,
     handleResume,
     handleSearch,
     handleSelectSong,
@@ -76,11 +78,9 @@ export const Home = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        {queue.length > 0 ? (
-          <IconButton onClick={handleSkip}>
-            <Skip color="primary" fontSize="large" />
-          </IconButton>
-        ) : null}
+        <IconButton onClick={handleRestartSong}>
+          <Restart color="primary" fontSize="large" />
+        </IconButton>
         {queue.length ? (
           status === VIDEO_STATUS.PLAYING ? (
             <IconButton onClick={handlePause}>
@@ -91,6 +91,12 @@ export const Home = () => {
               <Play color="success" fontSize="large" />
             </IconButton>
           )
+        ) : null}
+
+        {queue.length > 0 ? (
+          <IconButton onClick={handleSkip}>
+            <Skip color="primary" fontSize="large" />
+          </IconButton>
         ) : null}
 
         <Box style={styles.spacer} />
