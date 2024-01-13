@@ -1,5 +1,4 @@
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Modal from "@mui/material/Modal";
@@ -32,7 +31,7 @@ export const SearchResultsModal = ({
               onClick={() => handleSelectSong(result)}
               style={styles.listItemContainer}
             >
-              <Button type="link" href="#" style={styles.listItem}>
+              <Box style={styles.listItem}>
                 <Box>{result.title}</Box>
                 <Box style={styles.thumbnailContainer}>
                   <img
@@ -43,7 +42,7 @@ export const SearchResultsModal = ({
                   />
                   <Box>{result.channelTitle}</Box>
                 </Box>
-              </Button>
+              </Box>
             </ListItem>
           ))}
         </List>
