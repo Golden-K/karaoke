@@ -53,7 +53,7 @@ export const SearchResultsModal = ({
 };
 
 const styles = {
-  container: { maxHeight: "CALC(100vh - 64px)", overflowY: "auto" },
+  container: { maxHeight: "CALC(50vh)", overflowY: "auto" },
   list: {
     backgroundColor: "white",
     width: "100%",
