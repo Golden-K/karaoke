@@ -81,17 +81,15 @@ export const Home = () => {
         <IconButton onClick={handleRestartSong}>
           <Restart color="primary" fontSize="large" />
         </IconButton>
-        {queue.length ? (
-          status === VIDEO_STATUS.PLAYING ? (
-            <IconButton onClick={handlePause}>
-              <Pause fontSize="large" />
-            </IconButton>
-          ) : (
-            <IconButton onClick={handleResume}>
-              <Play color="success" fontSize="large" />
-            </IconButton>
-          )
-        ) : null}
+        {status === VIDEO_STATUS.PLAYING ? (
+          <IconButton onClick={handlePause}>
+            <Pause fontSize="large" />
+          </IconButton>
+        ) : (
+          <IconButton onClick={handleResume}>
+            <Play color="success" fontSize="large" />
+          </IconButton>
+        )}
 
         {queue.length > 0 ? (
           <IconButton onClick={handleSkip}>
