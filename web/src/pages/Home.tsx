@@ -76,7 +76,7 @@ export const Home = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        {queue.length > 1 ? (
+        {queue.length > 0 ? (
           <IconButton onClick={handleSkip}>
             <Skip color="primary" fontSize="large" />
           </IconButton>
