@@ -1,46 +1,31 @@
-# Getting Started with Create React App
+# Karaoke system for home usage
+### (microphones, amps, speakers, and cables not included)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Required
+Add the webaddress where you'll be deploying the app to `.env` (`REACT_APP_SITE_URL` is the key)
+You'll need to get at least one [API key for YouTube](https://developers.google.com/youtube/v3) in order for the search feature to work
 
-## Available Scripts
+Long story short, there is a limit of 100 searchers/day per project
 
-In the project directory, you can run:
+Here's how to add an API key:
+1. Create a project in your [Google Console](https://console.cloud.google.com/projectcreate)
+2. Enable `YouTube Data API v3` in the [Google Console API Library](https://console.cloud.google.com/apis/library)
+3. `+ CREATE CREDENTIALS` in [Google Console APIs & Services](https://console.cloud.google.com/apis/credentials)
+4. You may want to restrict this key as well to only be used for `YouTube Data API v3` (you can do so by clicking on the newly created key then selecting `Restrict Key` at the bottom under `API restrictions` - search for `youtube` in the dropdown menu and select `YouTube Data API v3`)
+5. Add the key to your local `.env` (or wherever you plan to deploy this` with a key of `ACT_APP_GOOGLE_API_KEY_1` (increase the number for each additional API key you add)
 
-### `yarn start`
+If 100 searches/day is not enough for you, repeat steps 1 through 5
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Start the app
+To get it up and running:
+1. Navigate to `./api` then run `yarn server`
+2. Open another temrinal and navigate to `./web` then run `yarn start`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+You can also run the API in a container (make sure you first have [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed):
+1. Navigate to `./api` then run `docker compose up -d` (or `docker compose up` if you want to leave the logging open)
 
-### `yarn test`
+## Start singing!
+On whatever screen/compouter/console you plan to display the lyrics, you'll need to navigate to wherever you set `REACT_APP_SITE_URL` and add `/#/lyrics` to that path. Ex: `https://www.karaokesite.com/#/lyrics`. Everyone else can navigate to the root page. Ex: `https://www.karaokesite.com/`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## TODO
+* Put everything in a container so we don't need to mess with proxying to the API:port
