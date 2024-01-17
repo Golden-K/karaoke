@@ -28,4 +28,4 @@ You can also run the API in a container (make sure you first have [Docker](https
 On whatever screen/compouter/console you plan to display the lyrics, you'll need to navigate to wherever you set `REACT_APP_SITE_URL` and add `/#/lyrics` to that path. Ex: `https://www.karaokesite.com/#/lyrics`. Everyone else can navigate to the root page. Ex: `https://www.karaokesite.com/`
 
 ## TODO
-* Put everything in a container so we don't need to mess with proxying to the API:port
+- [ ] Put everything in a container so we don't need to mess with proxying to the API:port
