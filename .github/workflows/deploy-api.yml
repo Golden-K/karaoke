@@ -18,8 +18,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: 🐳 Build
-
       - name: Deploy to Linode
         uses: easingthemes/ssh-deploy@main
         env:
