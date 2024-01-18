@@ -11,9 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
@@ -35,7 +32,7 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         env:
           SOURCE: "./web/build/"
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}a
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.TARGET_WEB_DIR }}

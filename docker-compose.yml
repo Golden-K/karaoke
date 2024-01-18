@@ -28,7 +28,7 @@ services:
     mem_limit: 1g
     restart: on-failure:10
     ports:
-      - 80:80
+      - 3000:80
     volumes:
       - ./web/build:/usr/share/nginx/html:ro
     depends_on:

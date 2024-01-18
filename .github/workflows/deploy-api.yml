@@ -3,7 +3,6 @@ name: "Deploy API"
 on:
   push:
     branches: ["main"]
-    paths: ["api/**"]
 
 jobs:
   build:
@@ -11,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v3
 
@@ -21,6 +17,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+
+      - name: 🐳 Build
 
       - name: Deploy to Linode
         uses: easingthemes/ssh-deploy@main
@@ -30,14 +28,3 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.TARGET_API_DIR }}
-          SCRIPT_AFTER: |
-            set -euxo pipefail
-            cd ${{ secrets.TARGET_API_DIR }}
-
-            echo "NODE_ENV=production" > .env
-
-            # Restart the API
-            docker compose -f docker-compose.yml down -v
-            docker compose -f docker-compose.yml up --build --force-recreate --remove-orphans -d
-
-            echo $RSYNC_STDOUT
