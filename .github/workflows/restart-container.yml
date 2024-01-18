@@ -1,4 +1,4 @@
-name: "Restart Container"
+name: "Restart API"
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
           cp package.json deploy
           cp docker-compose.yml deploy
 
-      - name: Deploy to Linode
+      - name: Restart API Container
         uses: easingthemes/ssh-deploy@main
         env:
           SOURCE: "./deploy"

@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Deploy
+    name: Deploy API
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Deploy to Linode
+      - name: Deploy API to Linode
         uses: easingthemes/ssh-deploy@main
         env:
           SOURCE: "./api/"

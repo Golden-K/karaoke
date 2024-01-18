@@ -3,11 +3,10 @@ name: "Deploy Web"
 on:
   push:
     branches: ["main"]
-    paths: ["web/**"]
 
 jobs:
   build:
-    name: 🐳 Build & Deploy
+    name: 🐳 Build & Deploy Web
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +27,7 @@ jobs:
       - name: 🐳 Build
         run: cd web && yarn && yarn build
 
-      - name: Deploy to Linode
+      - name: Deploy Web to Linode
         uses: easingthemes/ssh-deploy@main
         env:
           SOURCE: "./web/build/"
