@@ -30,6 +30,6 @@ services:
     ports:
       - 3000:80
     volumes:
-      - ./web/build:/usr/share/nginx/html:ro
+      - ./web:/usr/share/nginx/html:ro
     depends_on:
       - karaoke-api
