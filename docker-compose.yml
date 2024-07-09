@@ -23,13 +23,32 @@ services:
       - NODE_ENV=production
 
   karaoke-web:
-    image: nginx:alpine
+    image: node:latest
     container_name: karaoke-web
+    mem_limit: 1g
+    restart: on-failure:10
+    tty: true
+    command:
+      - sh
+      - -c
+      - |
+        echo "alias l='ls -l'" >> ~/.bashrc
+        cd /web
+        yarn && yarn build
+    volumes:
+      - ./web:/web
+    environment:
+      - NODE_ENV=production
+
+  karaoke-nginx:
+    depends_on:
+      - karaoke-web
+      - karaoke-api
+    image: nginx:alpine
+    container_name: karaoke-nginx
     mem_limit: 1g
     restart: on-failure:10
     ports:
       - 3000:80
     volumes:
-      - ./web:/usr/share/nginx/html:ro
-    depends_on:
-      - karaoke-api
+      - ./web/build/:/usr/share/nginx/html:ro
