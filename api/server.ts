@@ -21,7 +21,7 @@ const io = new Server(httpServer, {
   cors: {
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://karaoke.junglecorp.org"]
+        ? [process.env.SITE_URL ?? ""]
         : ["http://localhost:3000"],
   },
 });

@@ -21,6 +21,9 @@ services:
       - ./api:/api
     environment:
       - NODE_ENV=production
+      - SITE_URL=http://localhost:3000
+    networks:
+      - karaoke-network
 
   karaoke-web:
     image: node:latest
@@ -34,17 +37,21 @@ services:
       - |
         echo "alias l='ls -l'" >> ~/.bashrc
         cd /web
-        yarn && yarn build
+        yarn
+        yarn build
     volumes:
       - ./web:/web
     environment:
       - NODE_ENV=production
+    env_file: .env
+    networks:
+      - karaoke-network
 
   karaoke-nginx:
     depends_on:
       - karaoke-web
       - karaoke-api
-    image: nginx:alpine
+    image: nginx:latest
     container_name: karaoke-nginx
     mem_limit: 1g
     restart: on-failure:10
@@ -52,3 +59,10 @@ services:
       - 3000:80
     volumes:
       - ./web/build/:/usr/share/nginx/html:ro
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - karaoke-network
+
+networks:
+  karaoke-network:
+    driver: bridge

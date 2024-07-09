@@ -4,7 +4,7 @@
 
 ## Required
 
-Add the webaddress where you'll be deploying the app to `.env` (`REACT_APP_SITE_URL` is the key)
+In `docker-compose.yml` update `SITE_URL` to point to the web address you'll be hosting this on
 You'll need to get at least one [API key for YouTube](https://developers.google.com/youtube/v3) in order for the search feature to work
 
 Long story short, there is a limit of 100 searchers/day per project
@@ -28,11 +28,11 @@ To get it up and running:
 
 You can also run the API in a container (make sure you first have [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed):
 
-1. Navigate to `./api` then run `docker compose up -d` (or `docker compose up` if you want to leave the logging open)
+1. From the root directory run `docker compose up -d` (or `docker compose up` if you want to leave the logging open)
 
 ## Start singing!
 
-On whatever screen/compouter/console you plan to display the lyrics, you'll need to navigate to wherever you set `REACT_APP_SITE_URL` and add `/#/lyrics` to that path. Ex: `https://www.karaokesite.com/#/lyrics`.
+On whatever screen/compouter/console you plan to display the lyrics, you'll need to navigate to wherever you set `SITE_URL` to and add `/#/lyrics` to that path. Ex: `https://www.karaokesite.com/#/lyrics`.
 
 Everyone else can navigate to the root page. Ex: `https://www.karaokesite.com/`
 
