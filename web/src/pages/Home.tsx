@@ -13,7 +13,7 @@ import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
 import { SearchResultsModal } from "../components/SearchResultsModal";
 import { VIDEO_STATUS } from "../constants";
-import { useHomeLoader } from "./useHomeLoader";
+import { useHomeLoader } from "./Home.VM";
 
 export const Home = () => {
   const { actions, state } = useHomeLoader();

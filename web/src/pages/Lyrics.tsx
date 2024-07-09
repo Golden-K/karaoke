@@ -1,5 +1,5 @@
-import YouTube from "react-youtube";
-import { useLyricsLoader } from "./useLyricsLoader";
+import YouTube, { YouTubeEvent } from "react-youtube";
+import { useLyricsLoader } from "./Lyrics.VM";
 
 export const Lyrics = () => {
   const { actions, data, refs, state } = useLyricsLoader();
@@ -14,7 +14,7 @@ export const Lyrics = () => {
         style={styles.player}
         videoId={queue[0]?.videoId ?? "5bCwue1d9Js"}
         opts={playerOptions}
-        onReady={(e) => (playerRef.current = e)}
+        onReady={(e: YouTubeEvent) => (playerRef.current = e)}
         onStateChange={handleVideoStateChange}
       />
     </div>

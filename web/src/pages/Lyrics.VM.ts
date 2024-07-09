@@ -23,17 +23,20 @@ export const useLyricsLoader = () => {
   useEffect(() => {
     socket.timeout(5000).emit("get_queue", console.error);
 
-    socket.on("update_status", (status) => {
-      switch (status) {
-        case VIDEO_STATUS.PLAYING:
-          resumeSong();
-          break;
-        case VIDEO_STATUS.PAUSED:
-          pauseSong();
-          break;
+    socket.on(
+      "update_status",
+      (status: typeof VIDEO_STATUS.PLAYING | typeof VIDEO_STATUS.PAUSED) => {
+        switch (status) {
+          case VIDEO_STATUS.PLAYING:
+            resumeSong();
+            break;
+          case VIDEO_STATUS.PAUSED:
+            pauseSong();
+            break;
+        }
       }
-    });
-    socket.on("update_queue", (newQueue) => {
+    );
+    socket.on("update_queue", (newQueue: QueueItem[]) => {
       setQueue(newQueue);
       if (isStartingNewSong) {
         if (playerRef.current) {
