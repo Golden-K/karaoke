@@ -15,7 +15,7 @@ Here's how to add an API key:
 2. Enable `YouTube Data API v3` in the [Google Console API Library](https://console.cloud.google.com/apis/library)
 3. `+ CREATE CREDENTIALS` in [Google Console APIs & Services](https://console.cloud.google.com/apis/credentials)
 4. You may want to restrict this key as well to only be used for `YouTube Data API v3` (you can do so by clicking on the newly created key then selecting `Restrict Key` at the bottom under `API restrictions` - search for `youtube` in the dropdown menu and select `YouTube Data API v3`)
-5. Add the key to your local `.env` (or wherever you plan to deploy this`with a key of`ACT_APP_GOOGLE_API_KEY_1` (increase the number for each additional API key you add)
+5. Add the key to your local `.env` (or wherever you plan to deploy this) with a key of `REACT_APP_GOOGLE_API_KEY_1` (increase the number for each additional API key you add)
 
 If 100 searches/day is not enough for you, repeat steps 1 through 5
 
