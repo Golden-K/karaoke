@@ -9,7 +9,7 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "server": "node --loader ts-node/esm ./server.ts"
+    "server": "node --trace-warnings --loader ts-node/esm ./server.ts"
   },
   "eslintConfig": {
     "extends": [
