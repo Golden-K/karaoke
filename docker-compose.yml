@@ -43,7 +43,7 @@ services:
       - ./web:/web
     environment:
       - NODE_ENV=production
-    env_file: .env
+    env_file: ./web/.env
     networks:
       - karaoke-network
 

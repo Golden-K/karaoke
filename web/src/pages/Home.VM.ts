@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Alert, Item, QueueItem, SongItem } from "../../types";
-import { VIDEO_STATUS } from "../constants";
 import { socket } from "../socket";
 
 const MAX_API_KEYS = 2;
@@ -20,16 +19,10 @@ export const useHomeLoader = () => {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [searchResults, setSearchRestults] = useState<SongItem[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [status, setStatus] = useState<keyof typeof VIDEO_STATUS>(
-    VIDEO_STATUS.PAUSED
-  );
 
   useEffect(() => {
     socket.emit("get_queue", console.error);
-    socket.emit("get_video_status", console.error);
-
     socket.on("update_queue", setQueue);
-    socket.on("update_status", setStatus);
     socket.on("add_song_ack", (data) => {
       setIsLoading(false);
       if (data.status === "error") {
@@ -79,11 +72,12 @@ export const useHomeLoader = () => {
       setIsLoading(true);
       const params = {
         key: apiKeys[apiKeyIndex],
-        maxResults: 7,
+        maxResults: 10,
         part: "snippet, id",
-        q: "karaoke with lyrics " + searchTerm,
+        order: "relevance",
+        q: "karaoke karafun with lyrics " + searchTerm,
         type: "video",
-        videoEmbeddable: true,
+        safeSearch: "none",
       };
       const parsedParams = Object.entries(params).map(
         ([key, value]) => `${key}=${value}`
@@ -146,15 +140,6 @@ export const useHomeLoader = () => {
     const index = queue.findIndex((item) => item.id === id);
     moveSong(index, index + 1);
   };
-  const handlePause = () => {
-    socket.emit("set_status", VIDEO_STATUS.PAUSED, console.error);
-  };
-  const handleRestartSong = () => {
-    socket.emit("restart_song", console.error);
-  };
-  const handleResume = () => {
-    socket.emit("set_status", VIDEO_STATUS.PLAYING, console.error);
-  };
   const handleSkip = () => {
     socket.emit("next_song", console.error);
   };
@@ -165,9 +150,6 @@ export const useHomeLoader = () => {
     handleDelete,
     handleMoveDown,
     handleMoveUp,
-    handlePause,
-    handleRestartSong,
-    handleResume,
     handleSearch,
     handleSelectSong,
     handleSkip,
@@ -181,7 +163,6 @@ export const useHomeLoader = () => {
     queue,
     searchResults,
     searchTerm,
-    status,
   };
   return { actions, state };
 };

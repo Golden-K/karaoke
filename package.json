@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "start": "cd web && yarn build && cd .. && docker compose up -d"
+    "start": "docker compose up -d",
+    "dev": "cd api && yarn server & cd web && yarn start"
   }
 }

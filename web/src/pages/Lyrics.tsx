@@ -1,23 +1,27 @@
-import YouTube, { YouTubeEvent } from "react-youtube";
+import { Box, Link, Typography } from "@mui/material";
 import { useLyricsLoader } from "./Lyrics.VM";
 
 export const Lyrics = () => {
-  const { actions, data, refs, state } = useLyricsLoader();
-  const { handleVideoStateChange } = actions;
-  const { playerOptions } = data;
-  const { playerRef } = refs;
+  const { actions, state } = useLyricsLoader();
+  const { nextSong } = actions;
   const { queue } = state;
 
   return (
-    <div style={styles.container}>
-      <YouTube
-        style={styles.player}
-        videoId={queue[0]?.videoId ?? "5bCwue1d9Js"}
-        opts={playerOptions}
-        onReady={(e: YouTubeEvent) => (playerRef.current = e)}
-        onStateChange={handleVideoStateChange}
-      />
-    </div>
+    <Box style={styles.container}>
+      {queue[0]?.videoId ? (
+        <Typography variant="h1">
+          <Link
+            href={`https://www.youtube.com/v/${queue[0].videoId}`}
+            target="_blank"
+            onClick={nextSong}
+          >
+            {queue[0].title}
+          </Link>
+        </Typography>
+      ) : (
+        <Typography variant="h1">Queue is empty</Typography>
+      )}
+    </Box>
   );
 };
 

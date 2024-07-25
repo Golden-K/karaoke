@@ -1,7 +1,4 @@
-import Pause from "@mui/icons-material/Pause";
-import Play from "@mui/icons-material/PlayArrow";
 import Skip from "@mui/icons-material/SkipNext";
-import Restart from "@mui/icons-material/SkipPrevious";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,7 +9,6 @@ import Typography from "@mui/material/Typography";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
 import { SearchResultsModal } from "../components/SearchResultsModal";
-import { VIDEO_STATUS } from "../constants";
 import { useHomeLoader } from "./Home.VM";
 
 export const Home = () => {
@@ -23,40 +19,36 @@ export const Home = () => {
     handleDelete,
     handleMoveDown,
     handleMoveUp,
-    handlePause,
-    handleRestartSong,
-    handleResume,
     handleSearch,
     handleSelectSong,
     handleSkip,
     setKaraokeName,
     setSearchTerm,
   } = actions;
-  const {
-    alert,
-    isLoading,
-    karaokeName,
-    queue,
-    searchResults,
-    searchTerm,
-    status,
-  } = state;
+  const { alert, isLoading, karaokeName, queue, searchResults, searchTerm } =
+    state;
 
   return (
     <Box style={styles.container}>
       {queue.length ? (
         <Box style={styles.queueContainer}>
-          <Typography variant="body1" style={styles.currentlyContainer}>
-            <div style={styles.currentlySingingContainer}>
+          <Box style={styles.currentlyContainer}>
+            <Typography
+              variant="body1"
+              style={styles.currentlySingingContainer}
+            >
               <b>Currently Singing</b>
               <span style={styles.currentSinging}>{queue[0].karaokeName}</span>
-            </div>
+            </Typography>
 
-            <div style={styles.currentSongContainer}>
+            <Typography variant="body1" style={styles.currentSongContainer}>
               <b>Current Song</b>
-              <span style={styles.marquee}>{queue[0].title}</span>
-            </div>
-          </Typography>
+              <span style={styles.marqueeContainer}>
+                <span style={styles.marqueeItem}>{queue[0].title}</span>
+                <span style={styles.marqueeItem}>{queue[0].title}</span>
+              </span>
+            </Typography>
+          </Box>
 
           <Box style={styles.fullWidth}>
             <QueueList
@@ -78,19 +70,6 @@ export const Home = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        <IconButton onClick={handleRestartSong}>
-          <Restart color="primary" fontSize="large" />
-        </IconButton>
-        {status === VIDEO_STATUS.PLAYING ? (
-          <IconButton onClick={handlePause}>
-            <Pause fontSize="large" />
-          </IconButton>
-        ) : (
-          <IconButton onClick={handleResume}>
-            <Play color="success" fontSize="large" />
-          </IconButton>
-        )}
-
         {queue.length > 0 ? (
           <IconButton onClick={handleSkip}>
             <Skip color="primary" fontSize="large" />
@@ -151,11 +130,14 @@ const styles = {
   currentlyContainer: {
     width: "100%",
   },
-  marquee: {
-    animation: "marquee 20s linear infinite 5s",
+  marqueeContainer: {
+    display: "flex",
+    animation: "marquee 20s linear infinite",
     color: "lawngreen",
-    display: "block",
-    whiteSpace: "nowrap",
+    width: "200%",
+  },
+  marqueeItem: {
+    width: "100%",
   },
   currentSinging: {
     textOverflow: "ellipsis",
