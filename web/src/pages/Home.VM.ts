@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert, Item, QueueItem, SongItem } from "../../types";
 import { socket } from "../socket";
+import { parseTitle } from "../utils";
 
 const MAX_API_KEYS = 2;
 const apiKeys: Array<string | undefined> = [];
@@ -100,6 +101,7 @@ export const useHomeLoader = () => {
       setSearchRestults(
         items.map((item: Item) => ({
           ...item.snippet,
+          title: parseTitle(item.snippet.title),
           videoId: item.id.videoId,
         }))
       );

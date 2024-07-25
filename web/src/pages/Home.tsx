@@ -30,17 +30,14 @@ export const Home = () => {
     <Box style={styles.container}>
       {queue.length ? (
         <Box style={styles.queueContainer}>
-          <Box style={styles.currentlyContainer}>
-            <Typography
-              variant="body1"
-              style={styles.currentlySingingContainer}
-            >
-              <b>Currently Singing</b>
+          <Box style={styles.upNextContainer}>
+            <Typography variant="body1" style={styles.nextSingerContainer}>
+              <b>Up Next</b>
               <span style={styles.currentSinging}>{queue[0].karaokeName}</span>
             </Typography>
 
-            <Typography variant="body1" style={styles.currentSongContainer}>
-              <b>Current Song</b>
+            <Typography variant="body1" style={styles.nextSongContainer}>
+              <b>Song</b>
               <span style={styles.marqueeContainer}>
                 <span style={styles.marqueeItem}>{queue[0].title}</span>
                 <span style={styles.marqueeItem}>{queue[0].title}</span>
@@ -123,7 +120,7 @@ const styles = {
     alignItems: "center",
     width: "100%",
   },
-  currentlyContainer: {
+  upNextContainer: {
     width: "100%",
   },
   marqueeContainer: {
@@ -141,14 +138,14 @@ const styles = {
     whiteSpace: "nowrap",
     color: "lawngreen",
   },
-  currentlySingingContainer: {
+  nextSingerContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     overflow: "hidden",
     width: "100%",
   },
-  currentSongContainer: {
+  nextSongContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
