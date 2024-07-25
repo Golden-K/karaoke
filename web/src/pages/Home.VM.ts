@@ -140,9 +140,6 @@ export const useHomeLoader = () => {
     const index = queue.findIndex((item) => item.id === id);
     moveSong(index, index + 1);
   };
-  const handleSkip = () => {
-    socket.emit("next_song", console.error);
-  };
 
   const actions = {
     clearSearchResults,
@@ -152,7 +149,6 @@ export const useHomeLoader = () => {
     handleMoveUp,
     handleSearch,
     handleSelectSong,
-    handleSkip,
     setKaraokeName,
     setSearchTerm,
   };

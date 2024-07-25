@@ -1,8 +1,8 @@
 import { Box, Link, Typography } from "@mui/material";
-import { useLyricsLoader } from "./Lyrics.VM";
+import { useCurrentLoader } from "./Current.VM";
 
-export const Lyrics = () => {
-  const { actions, state } = useLyricsLoader();
+export const Current = () => {
+  const { actions, state } = useCurrentLoader();
   const { nextSong } = actions;
   const { queue } = state;
 
@@ -34,5 +34,4 @@ const styles = {
     height: "100vh",
     overflow: "hidden",
   },
-  player: { width: "100%", height: "100%", border: "none" },
 };

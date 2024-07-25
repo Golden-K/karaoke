@@ -5,7 +5,9 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { useState } from "react";
 import { QueueItem } from "../../types";
+import { ConfirmationDialog } from "./ConfirmationDialog";
 import { QueueListItem } from "./QueueListItem";
 
 type QueueListProps = {
@@ -21,14 +23,27 @@ export const QueueList = ({
   handleMoveUp,
   handleMoveDown,
 }: QueueListProps) => {
+  const [deleteId, setDeleteId] = useState("");
+  const handleConfirm = () => {
+    handleDelete(deleteId);
+    setDeleteId("");
+  };
+
   return (
     <List style={styles.listContainer}>
+      <ConfirmationDialog
+        isOpen={!!deleteId}
+        handleConfirm={handleConfirm}
+        handleCancel={() => setDeleteId("")}
+        title="Remove Song"
+        description="Are you sure you want to remove this song from the queue?"
+      />
       {queue.map((item: QueueItem, index: number) => (
         <ListItem
           key={`${item.videoId}-${index}`}
           style={styles.queueItemContainer}
         >
-          <IconButton aria-label="delete" onClick={() => handleDelete(item.id)}>
+          <IconButton aria-label="delete" onClick={() => setDeleteId(item.id)}>
             <Delete color="error" />
           </IconButton>
           <QueueListItem item={item} />

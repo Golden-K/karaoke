@@ -1,15 +1,15 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
+import { Current } from "./pages/Current";
 import { Home } from "./pages/Home";
-import { Lyrics } from "./pages/Lyrics";
 
 const router = createHashRouter([
   {
     path: "/",
     element: <Home />,
   },
-  { path: "/lyrics", element: <Lyrics /> },
+  { path: "/current", element: <Current /> },
 ]);
 
 function App() {

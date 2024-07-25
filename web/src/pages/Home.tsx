@@ -1,11 +1,10 @@
-import Skip from "@mui/icons-material/SkipNext";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
 import Snackbar from "@mui/material/Snackbar";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { QueueList } from "../components/QueueList";
 import { SearchResultsModal } from "../components/SearchResultsModal";
@@ -21,7 +20,6 @@ export const Home = () => {
     handleMoveUp,
     handleSearch,
     handleSelectSong,
-    handleSkip,
     setKaraokeName,
     setSearchTerm,
   } = actions;
@@ -70,11 +68,9 @@ export const Home = () => {
       />
 
       <Box style={styles.optionsContainer}>
-        {queue.length > 0 ? (
-          <IconButton onClick={handleSkip}>
-            <Skip color="primary" fontSize="large" />
-          </IconButton>
-        ) : null}
+        <Link to="current">
+          <Button>Current Song</Button>
+        </Link>
 
         <Box style={styles.spacer} />
 
@@ -104,7 +100,7 @@ export const Home = () => {
       </Box>
 
       <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
         open={!!alert}

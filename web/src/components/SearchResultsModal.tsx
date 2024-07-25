@@ -23,47 +23,47 @@ export const SearchResultsModal = ({
       aria-describedby="modal-modal-description"
       style={styles.container}
     >
-      <Box style={styles.listContainer}>
-        <List style={styles.list}>
-          {searchResults.map((result, index) => (
-            <ListItem
-              key={`${result.title}-${index}`}
-              onClick={() => handleSelectSong(result)}
-              style={styles.listItemContainer}
-            >
-              <Box style={styles.listItem}>
-                <Box>{result.title}</Box>
-                <Box style={styles.thumbnailContainer}>
-                  <img
-                    src={result.thumbnails.medium.url}
-                    alt={result.title}
-                    height="50px"
-                    width="auto"
-                  />
-                  <Box>{result.channelTitle}</Box>
-                </Box>
+      <List style={styles.list}>
+        {searchResults.map((result, index) => (
+          <ListItem
+            key={`${result.title}-${index}`}
+            onClick={() => handleSelectSong(result)}
+            style={styles.listItemContainer}
+          >
+            <Box style={styles.listItem}>
+              <Box>{result.title}</Box>
+              <Box style={styles.thumbnailContainer}>
+                <img
+                  src={result.thumbnails.medium.url}
+                  alt={result.title}
+                  height="50px"
+                  width="auto"
+                />
+                <Box>{result.channelTitle}</Box>
               </Box>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+            </Box>
+          </ListItem>
+        ))}
+      </List>
     </Modal>
   );
 };
 
 const styles = {
-  container: { overflowY: "auto" },
-  list: {
-    backgroundColor: "white",
-    width: "100%",
-    padding: 0,
-  },
-  listContainer: {
+  container: {
     display: "flex",
     justifyContent: "center",
-    alignSelf: "center",
+    alignItems: "center",
     position: "absolute",
     width: "100%",
+  },
+  list: {
+    position: "relative",
+    backgroundColor: "white",
+    maxHeight: "90vh",
+    maxWidth: "90vw",
+    padding: 0,
+    overflow: "auto",
   },
   listItem: {
     display: "flex",
