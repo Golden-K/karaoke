@@ -7,7 +7,7 @@
 **/coverage
 
 # production
-**/build/*
+**/build
 
 # logs
 **/npm-debug.log*

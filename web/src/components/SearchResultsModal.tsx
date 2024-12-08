@@ -60,8 +60,8 @@ const styles = {
   list: {
     position: "relative",
     backgroundColor: "white",
-    maxHeight: "90vh",
-    maxWidth: "90vw",
+    maxHeight: "80%",
+    maxWidth: "90%",
     padding: 0,
     overflow: "auto",
   },
